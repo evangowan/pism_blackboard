@@ -1,0 +1,14 @@
+Idealized symmetric PISM grid with climate forcing and glacial index
+
+by
+
+Evan James Gowan (evangowan@gmail.com)
+
+This is a series of scripts and a program to create an input file for PISM that is used for testing a basal conditions models developed by EJG (Gowan et al., in preparation). The purpose is to create a patch on one part of the domain to see how changing the ice sheet conditions will affect the ice sheet growth. This uses the index forcing module that was created by Niu et al (2019).
+
+The input file should work in the version of PISM with the index forcing module (https://github.com/sebhinck/pism-pub/tree/0.7_index_forcing), but the hydrology and basal sediment cover components work only in the new basal conditions model (link when made publicly available). 
+
+
+Gowan, E.J., Hinck, S., Niu, L. Lohmann, G., in preparation. The impact of basal hydrology, sediment strength, and sediment cover on ice sheet dynamics.
+
+Niu, L., Lohmann, G., Hinck, S., Gowan, E.J. and Krebs-Kanzow, U., 2019. The sensitivity of Northern Hemisphere ice sheets to atmospheric forcing during the last glacial cycle using PMIP3 models. Journal of Glaciology, 65(252), pp.645-661.
