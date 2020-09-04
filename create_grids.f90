@@ -68,9 +68,13 @@ program create_grids
 
 	double precision, parameter :: radius = 1500
 
+	! default ice thickness
+
+	double precision, parameter :: thk = 0.0
+
 	! allocatable variables to store the parameters
 
-	double precision, allocatable, dimension(:,:) :: tillphi_grid, tillcover_grid, bheatflx_grid, topg_grid, usurf_0, usurf_1
+	double precision, allocatable, dimension(:,:) :: tillphi_grid, tillcover_grid, bheatflx_grid, topg_grid, usurf_0, usurf_1, thk_grid
 	double precision, allocatable, dimension(:,:,:) :: pi_temp_grid, lgm_temp_grid, pi_precip_grid, lgm_precip_grid
 
 	! utility variables
@@ -84,6 +88,7 @@ program create_grids
 	character(len=7), parameter :: folder = "output/"
 
 	integer, parameter :: topg_unit=1000, bheatflx_unit = 1001, tillphi_unit=1002, tillcover_unit=1003
+	integer, parameter :: usurf_0_unit=1004, usurf_1_unit=1005, thk_unit=1006
 	integer :: climate_unit
 	integer :: max_width
 
@@ -121,7 +126,7 @@ program create_grids
 	! allocate memory
 	allocate(tillphi_grid(number_x, number_y), tillcover_grid(number_x, number_y), bheatflx_grid(number_x, number_y), &
 		   topg_grid(number_x, number_y), usurf_0(number_x, number_y), usurf_1(number_x, number_y),&
-		   pi_temp_grid(number_x, number_y, number_months), &
+		   thk_grid(number_x, number_y), pi_temp_grid(number_x, number_y, number_months), &
 		   lgm_temp_grid(number_x, number_y, number_months), pi_precip_grid(number_x, number_y, number_months), &
 		   lgm_precip_grid(number_x, number_y, number_months), stat=istat)
 
@@ -142,6 +147,7 @@ program create_grids
 			tillcover_grid(x_counter,y_counter) = tillcover
 			bheatflx_grid(x_counter,y_counter) = bheatflx
 			topg_grid(x_counter,y_counter) = topg
+			thk_grid(x_counter,y_counter) = thk
 
 			distance = sqrt(((x_counter-1)-center_x)**2 + ((y_counter-1)-center_y)**2) * resolution
 
@@ -228,7 +234,18 @@ program create_grids
 	open(unit=topg_unit, file=filename, access="sequential", form="formatted", status="replace")
 
 
-			topg_grid(x_counter,y_counter) = topg
+	filename = folder // "usurf_0.txt"
+
+	open(unit=usurf_0_unit, file=filename, access="sequential", form="formatted", status="replace")
+
+	filename = folder // "usurf_1.txt"
+
+	open(unit=usurf_1_unit, file=filename, access="sequential", form="formatted", status="replace")
+
+
+	filename = folder // "thk.txt"
+
+	open(unit=thk_unit, file=filename, access="sequential", form="formatted", status="replace")
 
 	
 	do month_counter = 1, number_months, 1
@@ -267,6 +284,13 @@ program create_grids
 			  (y_counter-1) * resolution*1000., bheatflx_grid(x_counter,y_counter)
 			write(topg_unit,*) (x_counter-1) * resolution*1000., &
 		  	  (y_counter-1) * resolution*1000., topg_grid(x_counter,y_counter)
+			write(thk_unit,*) (x_counter-1) * resolution*1000., &
+		  	  (y_counter-1) * resolution*1000., thk_grid(x_counter,y_counter)
+
+			write(usurf_0_unit,*) (x_counter-1) * resolution*1000., &
+		  	  (y_counter-1) * resolution*1000., usurf_0(x_counter,y_counter)
+			write(usurf_1_unit,*) (x_counter-1) * resolution*1000., &
+		  	  (y_counter-1) * resolution*1000., usurf_1(x_counter,y_counter)
 
 			do month_counter = 1, number_months, 1
 
@@ -303,5 +327,8 @@ program create_grids
 	close(unit=bheatflx_unit)
 	close(unit=bheatflx_unit)
 	close(unit=topg_unit)
+	close(unit=thk_unit)
+	close(unit=usurf_0_unit)
+	close(unit=usurf_1_unit)
 
 end program create_grids
