@@ -14,6 +14,8 @@ program create_grids
 	double precision, parameter :: min_precipitation_lgm = 6e-7, max_precipitation_lgm = 1e-5
 	double precision, parameter :: min_precipitation_pi = 6e-6, max_precipitation_pi = 1e-5
 
+	double precision, parameter :: precipitation_scaling=1e-6
+
 	integer, parameter :: number_months = 12
 
 	double precision, parameter, dimension(12) :: days = (/15.5, 45., 74.5, 105., 135.5, 166., 196.5, 227.5, 25.8, 288.5, 319., 349.5/)
@@ -304,11 +306,11 @@ program create_grids
 
 				climate_unit = (month_counter) *10 + 2
 				write(climate_unit,*) (x_counter-1) * resolution*1000., &
-				  (y_counter-1)* resolution*1000., pi_precip_grid(x_counter,y_counter, month_counter)
+				  (y_counter-1)* resolution*1000., pi_precip_grid(x_counter,y_counter, month_counter) * precipitation_scaling
 
 				climate_unit = (month_counter) *10 + 3
 				write(climate_unit,*) (x_counter-1) * resolution*1000., &
-				  (y_counter-1)* resolution*1000., lgm_precip_grid(x_counter,y_counter, month_counter)
+				  (y_counter-1)* resolution*1000., lgm_precip_grid(x_counter,y_counter, month_counter) * precipitation_scaling
 			end do 
 		end do
 	end do
