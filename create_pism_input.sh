@@ -1,5 +1,8 @@
 #! /bin/bash
 
+mkdir output
+rm output/*
+
 folder=nc
 
 mkdir ${folder}
