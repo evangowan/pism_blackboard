@@ -142,10 +142,10 @@ file_config=pism_config_modif.nc
 
 ncores=36
 resolution="50km"
-#input_direc=/home/ollie/lniu/runPISM/inputs/ 
+
 input_direc=/work/ollie/egowan/PISM/pism_branch/pism_blackboard/
 
-#inbound=${input_direc}pism_topg_thk_bheatflx_10km.nc
+
 inbound="pism_start.nc"
 boots="boots_T"    #"boots_T"/"boots_F"  
 ystart=0
