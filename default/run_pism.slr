@@ -37,8 +37,8 @@ insealevel=${11}        ##### input sealevel forcing file
 ##################################################################
 #dy=100                  ##### output every $dy year 
 #dy=1                  ##### output every $dy year 
-dy=5000
-ysnap=50             ##### save snapshot every $ysnap year
+dy=50
+ysnap=5000           ##### save snapshot every $ysnap year
 #let  ymod=ystart%ysnap
 #let  yy=ystart-ymod
 let yy=ystart
