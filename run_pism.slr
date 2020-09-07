@@ -2,7 +2,6 @@
 #SBATCH --job-name=PISM_Evan
 #SBATCH -p mpp
 #SBATCH --nodes=1
-#zzzzzz SBATCH --qos=large
 #SBATCH --ntasks-per-node=36
 #SBATCH --time=24:00:00
 ulimit -s unlimited
