@@ -34,16 +34,23 @@ program create_grids
 
 	! for LGM precipitation, there needs to be a more careful parameterization
 
+!	double precision, parameter, dimension(12) :: lgm_precipitation_0 = &
+!							(/1.8, 2.4, 2.7, 4.0, 5.6, 5.7, 5.5, 4.9, 4.4, 2.8, 1.9, 1.8/)
+!	double precision, parameter, dimension(12) :: lgm_precipitation_1000 = &
+!							(/1.5, 2.1, 2.4, 3.7, 5.3, 5.4, 5.2, 4.6, 4.1, 2.5, 1.6, 1.5/)
+!	double precision, parameter, dimension(12) :: lgm_precipitation_2000 = &
+!							(/0.6, 0.9, 1.0, 1.8, 3.1, 2.8, 2.7, 2.7, 2.5, 1.4, 0.8, 0.7/)
+!	double precision, parameter, dimension(12) :: lgm_precipitation_3000 = &
+!							(/0.2, 0.2, 0.3, 0.5, 0.8, 0.9, 0.8, 0.8, 0.7, 0.4, 0.2, 0.2/)
+!	double precision, parameter, dimension(12) :: lgm_precipitation_3500 = &
+!							(/0.1, 0.1, 0.1, 0.3, 0.4, 0.5, 0.6, 0.5, 0.4, 0.3, 0.1, 0.1/)
+
+
 	double precision, parameter, dimension(12) :: lgm_precipitation_0 = &
-							(/1.8, 2.4, 2.7, 4.0, 5.6, 5.7, 5.5, 4.9, 4.4, 2.8, 1.9, 1.8/)
-	double precision, parameter, dimension(12) :: lgm_precipitation_1000 = &
-							(/1.5, 2.1, 2.4, 3.7, 5.3, 5.4, 5.2, 4.6, 4.1, 2.5, 1.6, 1.5/)
-	double precision, parameter, dimension(12) :: lgm_precipitation_2000 = &
-							(/0.6, 0.9, 1.0, 1.8, 3.1, 2.8, 2.7, 2.7, 2.5, 1.4, 0.8, 0.7/)
-	double precision, parameter, dimension(12) :: lgm_precipitation_3000 = &
-							(/0.2, 0.2, 0.3, 0.5, 0.8, 0.9, 0.8, 0.8, 0.7, 0.4, 0.2, 0.2/)
+							(/2.9, 3.2, 4.2, 4.7, 4.9, 5.3, 5.6, 4.7, 3.8, 3.2, 2.5, 2.9/)
 	double precision, parameter, dimension(12) :: lgm_precipitation_3500 = &
-							(/0.1, 0.1, 0.1, 0.3, 0.4, 0.5, 0.6, 0.5, 0.4, 0.3, 0.1, 0.1/)
+							(/1.9, 2., 2.5, 2.9, 3.5, 4.1, 4.7, 5., 4.3, 3.4, 2.6, 2.1/)
+
 
 	! for PI, i am not so concerned
 	double precision, parameter, dimension(12) :: pi_precipitation_0 = &
@@ -176,24 +183,29 @@ program create_grids
 					  max_height * (usurf_1(x_counter,y_counter) - topg) +  pi_temperature_0(month_counter)
 
 					! treating the lgm a bit differently 
-					if(usurf_1(x_counter,y_counter) - topg < 1000.) THEN
-						lgm_precip_grid(x_counter,y_counter, month_counter) = &
-						 (lgm_precipitation_1000(month_counter) - lgm_precipitation_0(month_counter)) / &
-					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_0(month_counter)
-					else if(usurf_1(x_counter,y_counter) - topg < 2000.) THEN
-						lgm_precip_grid(x_counter,y_counter, month_counter) = &
-						 (lgm_precipitation_2000(month_counter) - lgm_precipitation_1000(month_counter)) / &
-					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_1000(month_counter)
-					else if(usurf_1(x_counter,y_counter) - topg < 3000.) THEN
-						lgm_precip_grid(x_counter,y_counter, month_counter) = &
-						 (lgm_precipitation_3000(month_counter) - lgm_precipitation_2000(month_counter)) / &
-					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_2000(month_counter)
-					else 
-						lgm_precip_grid(x_counter,y_counter, month_counter) = &
-						 (lgm_precipitation_3500(month_counter) - lgm_precipitation_3000(month_counter)) / &
-					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_3000(month_counter)
+!					if(usurf_1(x_counter,y_counter) - topg < 1000.) THEN
+!						lgm_precip_grid(x_counter,y_counter, month_counter) = &
+!						 (lgm_precipitation_1000(month_counter) - lgm_precipitation_0(month_counter)) / &
+!					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_0(month_counter)
+!					else if(usurf_1(x_counter,y_counter) - topg < 2000.) THEN
+!						lgm_precip_grid(x_counter,y_counter, month_counter) = &
+!						 (lgm_precipitation_2000(month_counter) - lgm_precipitation_1000(month_counter)) / &
+!					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_1000(month_counter)
+!					else if(usurf_1(x_counter,y_counter) - topg < 3000.) THEN
+!						lgm_precip_grid(x_counter,y_counter, month_counter) = &
+!						 (lgm_precipitation_3000(month_counter) - lgm_precipitation_2000(month_counter)) / &
+!					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_2000(month_counter)
+!					else 
+!						lgm_precip_grid(x_counter,y_counter, month_counter) = &
+!						 (lgm_precipitation_3500(month_counter) - lgm_precipitation_3000(month_counter)) / &
+!					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_3000(month_counter)
+!
+!					endif
 
-					endif
+					! the above commented out code was an abject failure
+					lgm_precip_grid(x_counter,y_counter, month_counter) = &
+					  (lgm_precipitation_3500(month_counter) - lgm_precipitation_0(month_counter)) / &
+					  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_0(month_counter)
 
 					pi_precip_grid(x_counter,y_counter, month_counter) = &
 					  (pi_precipitation_3500(month_counter) - pi_precipitation_0(month_counter)) / &
