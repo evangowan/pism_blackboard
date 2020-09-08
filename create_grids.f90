@@ -31,10 +31,16 @@ program create_grids
 !							(/269.9, 272.9, 278.6, 284.8, 291.1, 295.8, 298.2, 297.3, 292.8, 284.0, 276.4, 271.5/)
 !	double precision, parameter, dimension(12) :: pi_temperature_3500 = &
 !							(/255.7, 258.3, 263.9, 270.0, 278.4, 285.0, 287.3, 285.0, 279.9, 272.8, 265.1, 258.8/)
+!	double precision, parameter, dimension(12) :: pi_temperature_0 = &
+!							(/265, 268, 274, 280, 286, 291, 293, 292, 288, 279, 271, 267/)
+!	double precision, parameter, dimension(12) :: pi_temperature_3500 = &
+!							(/251, 253, 259, 265, 273, 280, 282, 280, 275, 268, 260, 254/)
 	double precision, parameter, dimension(12) :: pi_temperature_0 = &
-							(/265, 268, 274, 280, 286, 291, 293, 292, 288, 279, 271, 267/)
+							(/260, 263, 269, 275, 281, 286, 288, 287, 283, 274, 266, 262/)
 	double precision, parameter, dimension(12) :: pi_temperature_3500 = &
-							(/251, 253, 259, 265, 273, 280, 282, 280, 275, 268, 260, 254/)
+							(/246, 248, 254, 260, 268, 275, 277, 275, 270, 263, 255, 249/)
+
+
 
 	! for LGM precipitation, there needs to be a more careful parameterization
 
