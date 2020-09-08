@@ -50,17 +50,27 @@ program create_grids
 !							(/0.1, 0.1, 0.1, 0.3, 0.4, 0.5, 0.6, 0.5, 0.4, 0.3, 0.1, 0.1/)
 
 
+!	double precision, parameter, dimension(12) :: lgm_precipitation_0 = &
+!							(/2.9, 3.2, 4.2, 4.7, 4.9, 5.3, 5.6, 4.7, 3.8, 3.2, 2.5, 2.9/)
+!	double precision, parameter, dimension(12) :: lgm_precipitation_3500 = &
+!							(/1.9, 2., 2.5, 2.9, 3.5, 4.1, 4.7, 5., 4.3, 3.4, 2.6, 2.1/)
+
 	double precision, parameter, dimension(12) :: lgm_precipitation_0 = &
 							(/2.9, 3.2, 4.2, 4.7, 4.9, 5.3, 5.6, 4.7, 3.8, 3.2, 2.5, 2.9/)
 	double precision, parameter, dimension(12) :: lgm_precipitation_3500 = &
-							(/1.9, 2., 2.5, 2.9, 3.5, 4.1, 4.7, 5., 4.3, 3.4, 2.6, 2.1/)
+							(/2.9, 3.2, 4.2, 4.7, 4.9, 5.3, 5.6, 4.7, 3.8, 3.2, 2.5, 2.9/)
 
 
 	! for PI, i am not so concerned
+!	double precision, parameter, dimension(12) :: pi_precipitation_0 = &
+!							(/2.9, 3.2, 4.2, 4.7, 4.9, 5.3, 5.6, 4.7, 3.8, 3.2, 2.5, 2.9/)
+!	double precision, parameter, dimension(12) :: pi_precipitation_3500 = &
+!							(/1.9, 2., 2.5, 2.9, 3.5, 4.1, 4.7, 5., 4.3, 3.4, 2.6, 2.1/)
+
 	double precision, parameter, dimension(12) :: pi_precipitation_0 = &
-							(/2.9, 3.2, 4.2, 4.7, 4.9, 5.3, 5.6, 4.7, 3.8, 3.2, 2.5, 2.9/)
+							(/4.9, 5.2, 6.2, 6.7, 6.9, 7.3, 7.6, 6.7, 5.8, 5.2, 4.5, 4.9/)
 	double precision, parameter, dimension(12) :: pi_precipitation_3500 = &
-							(/1.9, 2., 2.5, 2.9, 3.5, 4.1, 4.7, 5., 4.3, 3.4, 2.6, 2.1/)
+							(/4.9, 5.2, 6.2, 6.7, 6.9, 7.3, 7.6, 6.7, 5.8, 5.2, 4.5, 4.9/)
 
 	! I want to make sure that the edges of where the ice sheet is expected to go will not be nowhere close to sea level
 	double precision, parameter :: topg = 250.0
