@@ -28,7 +28,7 @@ xyz2grd tbnds.txt -G${folder}/ts_temp.nc -R0/1/${time_start}/${time_end} -I1/${t
 
 
 # equation for making the glacial index
-ncap2 -Oh -s 'glac_index[y]=cos( 2 *  3.14159265359 / 40000 * (y-20000  )) / 2 + 0.5;' ${folder}/ts_temp.nc ${folder}/ts_temp2.nc
+ncap2 -Oh -s 'glac_index[y]=1.2 * cos( 2 *  3.14159265359 / 40000 * (y-20000  )) / 2 + 0.6;' ${folder}/ts_temp.nc ${folder}/ts_temp2.nc
 
 ncrename -d y,time -v y,time -dx,bnds -v x,bnds -v z,tbnds  ${folder}/ts_temp2.nc
 
