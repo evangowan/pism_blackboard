@@ -21,10 +21,15 @@ program create_grids
 	double precision, parameter, dimension(12) :: days = (/15.5, 45., 74.5, 105., 135.5, 166., 196.5, 227.5, 25.8, 288.5, 319., 349.5/)
 
 	! LGM temperature parameters
+!	double precision, parameter, dimension(12) :: lgm_temperature_0 = &
+!							(/246.9, 250.9, 256.3, 263.7, 271.7, 275.3, 276.0, 274.8, 271.0, 262.7, 253.4, 247.8/)
+!	double precision, parameter, dimension(12) :: lgm_temperature_3500 = &
+!							(/223.2, 226.1, 230.2, 237.3, 246.2, 252.9, 255.9, 253.8, 247.7, 238.8, 230.0, 224.6/)
+
 	double precision, parameter, dimension(12) :: lgm_temperature_0 = &
-							(/246.9, 250.9, 256.3, 263.7, 271.7, 275.3, 276.0, 274.8, 271.0, 262.7, 253.4, 247.8/)
+							(/242, 246, 251, 259, 267, 270, 271, 270, 266, 258, 248, 243/)
 	double precision, parameter, dimension(12) :: lgm_temperature_3500 = &
-							(/223.2, 226.1, 230.2, 237.3, 246.2, 252.9, 255.9, 253.8, 247.7, 238.8, 230.0, 224.6/)
+							(/218, 221, 225, 232, 241, 248, 251, 249, 243, 234, 225, 220/)
 
 	! PI temperature parameters
 !	double precision, parameter, dimension(12) :: pi_temperature_0 = &
