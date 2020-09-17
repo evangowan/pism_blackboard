@@ -146,7 +146,7 @@ input_direc=/work/ollie/egowan/PISM/pism_branch/pism_blackboard/
 
 
 inbound="snap_25000.000.nc"
-boots="boots_F"    #"boots_T"/"boots_F"  
+boots="boots_T"    #"boots_T"/"boots_F"  
 ystart=25000
 yend=25001
 ftsout=ts_pism_1yr.nc   
