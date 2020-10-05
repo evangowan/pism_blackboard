@@ -37,8 +37,8 @@ insealevel=${11}        ##### input sealevel forcing file
 ##################################################################
 #dy=100                  ##### output every $dy year 
 #dy=1                  ##### output every $dy year 
-dy=0.0833
-ysnap=0.25          ##### save snapshot every $ysnap year
+dy=0.25
+ysnap=50          ##### save snapshot every $ysnap year
 #let  ymod=ystart%ysnap
 #let  yy=ystart-ymod
 let yy=ystart
@@ -70,7 +70,8 @@ file_config=pism_config_modif.nc
       else 
           echo "unknown boots command"
       fi 
-      skip=" -max_dt 0.083 -skip  -skip_max 10    -ssa_rtol 1e-4  -ssafd_ksp_rtol 1e-5   "    
+#-skip  -skip_max 10
+      skip=" -max_dt 0.0833   -timestep_hit_multiples 0.0833  -ssa_rtol 1e-4  -ssafd_ksp_rtol 1e-5   "    
       calendar=" -calendar  365_day   "
       #skip="  "  
       #=========== dynamics ==========================================
@@ -148,10 +149,10 @@ input_direc=/work/ollie/egowan/PISM/pism_branch/pism_blackboard/
 inbound="snap_25000.000.nc"
 boots="boots_T"    #"boots_T"/"boots_F"  
 ystart=25000
-yend=25001
+yend=25050
 ftsout=ts_pism_1yr.nc   
-fexout=ex_pism1_1yr.nc 
-fout=out_pism.nc                                                            
+fexout=ex_pism1_1yr_new.nc 
+fout=out_pism_1yr.nc                                                            
 inindex=climate.nc
 insealevel="nothing" # no sea level
 

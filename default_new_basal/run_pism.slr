@@ -70,7 +70,7 @@ file_config=pism_config_modif.nc
       else 
           echo "unknown boots command"
       fi 
-      skip=" -max_dt 0.083 -skip  -skip_max 10    -ssa_rtol 1e-4  -ssafd_ksp_rtol 1e-5   "    
+      skip=" -max_dt 0.0833  -timestep_hit_multiples 0.0833  -ssa_rtol 1e-4  -ssafd_ksp_rtol 1e-5   "    
       calendar=" -calendar  365_day   "
       #skip="  "  
       #=========== dynamics ==========================================
