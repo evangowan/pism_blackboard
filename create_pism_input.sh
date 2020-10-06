@@ -98,7 +98,7 @@ ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder
 
 ncatted -O -a long_name,${z_name_short},o,c,"${remark}" ${folder}/temp2.nc
 ncatted -O -a units,${z_name_short},o,c,"${units}" ${folder}/temp2.nc
-ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
+#ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
 ncatted -O -a pism_intent,${z_name_short},o,c,"model_state" ${folder}/temp2.nc
 
 ncatted -a  axis,x,c,c,"X"  ${folder}/temp2.nc
@@ -146,7 +146,7 @@ ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder
 
 ncatted -O -a long_name,${z_name_short},o,c,"${remark}" ${folder}/temp2.nc
 ncatted -O -a units,${z_name_short},o,c,"${units}" ${folder}/temp2.nc
-ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
+#ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
 ncatted -O -a pism_intent,${z_name_short},o,c,"model_state" ${folder}/temp2.nc
 
 ncatted -a  axis,x,c,c,"X"  ${folder}/temp2.nc
@@ -196,7 +196,7 @@ ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder
 
 ncatted -O -a long_name,${z_name_short},o,c,"${remark}" ${folder}/temp2.nc
 ncatted -O -a units,${z_name_short},o,c,"${units}" ${folder}/temp2.nc
-ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
+#ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
 ncatted  -a  standard_name,${z_name_short},c,c,"${standard}"    ${folder}/temp2.nc
 #ncatted -O -a pism_intent,${z_name_short},o,c,"model_state" ${folder}/temp2.nc
 
@@ -246,7 +246,7 @@ ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder
 
 ncatted -O -a long_name,${z_name_short},o,c,"${remark}" ${folder}/temp2.nc
 ncatted -O -a units,${z_name_short},o,c,"${units}" ${folder}/temp2.nc
-ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
+#ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
 ncatted  -a  standard_name,${z_name_short},c,c,"${standard}"    ${folder}/temp2.nc
 #ncatted -O -a pism_intent,${z_name_short},o,c,"model_state" ${folder}/temp2.nc
 
@@ -296,7 +296,7 @@ ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder
 
 #ncatted -O -a long_name,${z_name_short},o,c,"${remark}" ${folder}/temp2.nc
 ncatted -O -a units,${z_name_short},o,c,"${units}" ${folder}/temp2.nc
-ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
+#ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
 ncatted  -a  standard_name,${z_name_short},c,c,"${standard}"    ${folder}/temp2.nc
 #ncatted -O -a pism_intent,${z_name_short},o,c,"model_state" ${folder}/temp2.nc
 
@@ -345,7 +345,7 @@ ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder
 
 ncatted -O -a long_name,${z_name_short},o,c,"${remark}" ${folder}/temp2.nc
 ncatted -O -a units,${z_name_short},o,c,"${units}" ${folder}/temp2.nc
-ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
+#ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
 ncatted -O -a pism_intent,${z_name_short},o,c,"model_state" ${folder}/temp2.nc
 
 ncatted -a  axis,x,c,c,"X"  ${folder}/temp2.nc
@@ -393,7 +393,7 @@ ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder
 
 ncatted -O -a long_name,${z_name_short},o,c,"${remark}" ${folder}/temp2.nc
 ncatted -O -a units,${z_name_short},o,c,"${units}" ${folder}/temp2.nc
-ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
+#ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
 ncatted -O -a pism_intent,${z_name_short},o,c,"model_state" ${folder}/temp2.nc
 
 ncatted -a  axis,x,c,c,"X"  ${folder}/temp2.nc
@@ -461,11 +461,12 @@ xyz2grd output/pi_temperature_${month}.txt -G${folder}/temp.nc -R0/${grid_width_
 ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 
 
-
 ncrename -O -v z,${z_name_short} ${folder}/temp4.nc
 
 
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp4.nc ${folder}/temp2.nc
+ncks -O -3 ${folder}/temp4.nc ${folder}/temp4a.nc
+ncap -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
+ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
 
@@ -490,6 +491,8 @@ ncatted -a spacing_meters,y,o,c,"${resolution_m}" ${folder}/temp2.nc
 day2=$( echo "${day1} - ${day}" | bc)
 
 echo ${day} ${day1} ${day2}
+
+
 
 ncap2 -Oh -s "defdim(\"bnds\",2); bnds[bnds]={0,1} ; time_per[time_per]={ ${day}} ; time_per@units=\"days since 1950-01-01\" ; time_per@bounds=\"time_bnds\"; time_per@standard_name=\"time\"; time_per@long_name=\"time\"; time_per@calendar=\"standard\"; time_per@axis=\"T\"" ${folder}/temp2.nc ${folder}/temp3.nc
 
@@ -537,7 +540,9 @@ ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 ncrename -O -v z,${z_name_short} ${folder}/temp4.nc
 
 
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp4.nc ${folder}/temp2.nc
+ncks -O -3 ${folder}/temp4.nc ${folder}/temp4a.nc
+ncap -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
+ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
 
@@ -610,7 +615,9 @@ ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 ncrename -O -v z,${z_name_short} ${folder}/temp4.nc
 
 
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp4.nc ${folder}/temp2.nc
+ncks -O -3 ${folder}/temp4.nc ${folder}/temp4a.nc
+ncap -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
+ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
 
@@ -681,7 +688,9 @@ ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 ncrename -O -v z,${z_name_short} ${folder}/temp4.nc
 
 
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp4.nc ${folder}/temp2.nc
+ncks -O -3 ${folder}/temp4.nc ${folder}/temp4a.nc
+ncap -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
+ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
 
