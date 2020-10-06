@@ -23,8 +23,10 @@ y_position="8c"
 
 max_diff=210
 min_diff=-210
+interval=20
+tick_interval=40
 
-makecpt -Cpolar -T${min_diff}/${max_diff}/20 -I > shades_diff.cpt
+makecpt -Cpolar -T${min_diff}/${max_diff}/${interval} -I > shades_diff.cpt
 
 # create thickness difference
 
@@ -44,7 +46,7 @@ END
 x_position="6c"
 y_position="5.5c"
 
-psscale  -Dx${x_position}/${y_position}+w9c/0.5c+h  -O -Cshades_diff.cpt -Bx500+l"Thickness difference (m)"  -V --FONT_ANNOT_PRIMARY=10p --FONT_LABEL=12p --MAP_ANNOT_OFFSET_PRIMARY=1p --MAP_TICK_LENGTH_PRIMARY=2p >> ${plot}
+psscale  -Dx${x_position}/${y_position}+w9c/0.5c+h  -O -Cshades_diff.cpt -Bx${tick_interval}+l"Thickness difference (m)"  -V --FONT_ANNOT_PRIMARY=10p --FONT_LABEL=12p --MAP_ANNOT_OFFSET_PRIMARY=1p --MAP_TICK_LENGTH_PRIMARY=2p >> ${plot}
 
 
 grdmath ${file1}?thk 0 GT = mask1.nc
