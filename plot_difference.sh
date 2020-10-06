@@ -21,10 +21,10 @@ J_options="-JX${map_width}/0"
 x_position="3c"
 y_position="8c"
 
-max_diff=1625
-min_diff=-1625
+max_diff=210
+min_diff=-210
 
-makecpt -Cpolar -T${min_diff}/${max_diff}/250 -I > shades_diff.cpt
+makecpt -Cpolar -T${min_diff}/${max_diff}/20 -I > shades_diff.cpt
 
 # create thickness difference
 
