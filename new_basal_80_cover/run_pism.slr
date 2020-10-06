@@ -140,7 +140,7 @@ file_config=pism_config_modif.nc
 
 
 ncores=36
-resolution="50km"
+resolution="20km"
 
 input_direc=/work/ollie/egowan/PISM/pism_branch/pism_blackboard/
 

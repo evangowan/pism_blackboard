@@ -8,7 +8,7 @@ folder=nc
 mkdir ${folder}
 rm ${folder}/*
 
-resolution=50 # in km
+resolution=20 # in km
 resolution_m=${resolution}000 # in m
 
 
