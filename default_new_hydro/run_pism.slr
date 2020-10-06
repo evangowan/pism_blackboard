@@ -53,7 +53,7 @@ file_config=pism_config_modif.nc
           if [ $resolution = "50km" ]; then  
              resol=" -Mx 81  -My  81  -Mz  101  -Mbz 11  -Lz 5000 -Lbz  2000   "
           elif  [ $resolution = "20km" ]; then 
-             resol=" -Mx 390  -My  330  -Mz  201  -Mbz 21  -Lz 5000 -Lbz  2000   "
+             resol=" -Mx 201  -My  201  -Mz  101  -Mbz 11  -Lz 5000 -Lbz  2000   "
           else 
              echo "resolution error!!"
              exit 
