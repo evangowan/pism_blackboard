@@ -92,7 +92,9 @@ xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder}/temp2.nc
+ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
+ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
 
@@ -140,7 +142,9 @@ xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder}/temp2.nc
+ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
+ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
 
@@ -190,7 +194,9 @@ xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder}/temp2.nc
+ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
+ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
 
@@ -240,7 +246,9 @@ xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder}/temp2.nc
+ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
+ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
 
@@ -290,7 +298,9 @@ xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder}/temp2.nc
+ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
+ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
 
@@ -330,7 +340,7 @@ z_name="${z_name_short}"
 z_scale="1"
 z_offset="0" # applied after scaling
 z_invalid="0" # value for areas without data
-fillval="NaN"
+fillval="250"
 remark="topography at time zero"
 units="m"
 
@@ -339,13 +349,16 @@ xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder}/temp2.nc
+ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
+ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
 
 ncatted -O -a long_name,${z_name_short},o,c,"${remark}" ${folder}/temp2.nc
 ncatted -O -a units,${z_name_short},o,c,"${units}" ${folder}/temp2.nc
 #ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
+ncatted -O -a _FillValue,${z_name_short},d,c,${fillval} ${folder}/temp2.nc
 ncatted -O -a pism_intent,${z_name_short},o,c,"model_state" ${folder}/temp2.nc
 
 ncatted -a  axis,x,c,c,"X"  ${folder}/temp2.nc
@@ -363,6 +376,7 @@ ncatted -a spacing_meters,y,o,c,"${resolution_m}" ${folder}/temp2.nc
 
 mv -f ${folder}/temp2.nc ${folder}/${variable}.nc
 
+
 rm temp.nc
 
 #########
@@ -378,7 +392,7 @@ z_name="${z_name_short}"
 z_scale="1"
 z_offset="0" # applied after scaling
 z_invalid="0" # value for areas without data
-fillval="NaN"
+fillval="250"
 remark="topography at time lgm"
 units="m"
 
@@ -386,14 +400,15 @@ xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_
 
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
-
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/temp.nc ${folder}/temp2.nc
-
+ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
+ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
 ncatted -O -a long_name,${z_name_short},o,c,"${remark}" ${folder}/temp2.nc
 ncatted -O -a units,${z_name_short},o,c,"${units}" ${folder}/temp2.nc
 #ncatted -O -a _FillValue,${z_name_short},o,c,${fillval} ${folder}/temp2.nc
+ncatted -O -a _FillValue,${z_name_short},d,c,${fillval} ${folder}/temp2.nc
 ncatted -O -a pism_intent,${z_name_short},o,c,"model_state" ${folder}/temp2.nc
 
 ncatted -a  axis,x,c,c,"X"  ${folder}/temp2.nc
