@@ -1,0 +1,171 @@
+#!/bin/bash
+#SBATCH --job-name=PISM_Evan
+#SBATCH -p mpp
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=36
+#SBATCH --time=12:00:00
+ulimit -s unlimited
+
+
+
+#module load pism_externals
+module load intel18_evan
+#export PISM_INSTALL_PREFIX=/home/ollie/lniu/usr/software/pism0.7_index
+export PISM_INSTALL_PREFIX=/home/ollie/egowan/software/pism
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PISM_INSTALL_PREFIX/lib:$PISM_INSTALL_PREFIX/lib/pism
+export LD_RUN_PATH=$LD_RUN_PATH:$PISM_INSTALL_PREFIX/lib:$PISM_INSTALL_PREFIX/lib/pism
+export PATH=$PATH:$PISM_INSTALL_PREFIX/bin:$PISM_INSTALL_PREFIX/util:
+
+which pismr
+
+#######################################################################################################
+########   function for PISM run ################################################################
+#######################################################################################################
+function  PISM_run(){ 
+ncores=$1               ##### number of cores                                                                            
+resolution=$2           ##### resolution                                                                          
+inbound=$3              ##### input topography data                                                              
+boots=$4                ##### bootstrap or not: boots_T / boots_F
+ystart=$5               ##### start year of run 
+yend=$6                 ##### end year of run
+ftsout=$7               ##### output ts file name 
+fexout=$8               ##### output ex file name 
+fout=$9                 ##### output file                                                             
+inindex=${10}           ##### input index forcing file 
+insealevel=${11}        ##### input sealevel forcing file 
+restart=${12}           ##### append to time series files
+
+##################################################################
+#dy=100                  ##### output every $dy year 
+#dy=1                  ##### output every $dy year 
+dy=50
+ysnap=5000           ##### save snapshot every $ysnap year
+#let  ymod=ystart%ysnap
+#let  yy=ystart-ymod
+let yy=ystart
+file_config=pism_config_modif.nc
+##################################################################
+      pismmpi="srun  " 
+      pismrun="pismr  "   
+
+      if [ $boots = "boots_T" ]; then 
+          input=" ${inbound}  -bootstrap  "
+          #
+          if [ $resolution = "50km" ]; then  
+             resol=" -Mx 81  -My  81  -Mz  101  -Mbz 11  -Lz 5000 -Lbz  2000   "
+          elif  [ $resolution = "20km" ]; then 
+             resol=" -Mx 201  -My  201  -Mz  101  -Mbz 11  -Lz 5000 -Lbz  2000   "
+          else 
+             echo "resolution error!!"
+             exit 
+          fi 
+          exapp="   "
+          tsapp="   "
+          
+      elif [ $boots = "boots_F" ]; then 
+          input=" ${inbound}   "
+          resol="    "
+
+          exapp="  -extra_append "
+          tsapp=" -ts_append "
+      else 
+          echo "unknown boots command"
+      fi 
+      skip=" -max_dt 0.0833  -timestep_hit_multiples 0.0833  -ssa_rtol 1e-4  -ssafd_ksp_rtol 1e-5   "    
+      calendar=" -calendar  365_day   "
+      #skip="  "  
+      #=========== dynamics ==========================================
+      dynamics=" ssa+sia  -sia_e  5 "
+      #=========== subglacier ===================================
+
+      yield_stress_model_name="mohr_coulomb_evan"
+#	yield_stress_model_name="mohr_coulomb"
+      subglacier=" -yield_stress ${yield_stress_model_name} -pseudo_plastic   -till_effective_fraction_overburden 0.01  -hydrology_tillwat_max 1   -bed_def iso -tauc_slippery_grounding_lines true"
+      #========== hydrology ======================================
+
+      fraction_till=1.0
+      hydrology_enhancement=0.1
+
+      set_constant_hydrology=" " #"-hydrology_use_const_bmelt "
+      effective_water_thickness=" -hydrology_tillwat_max 1.0"
+      basal_melt_rate="" #" -hydrology_const_bmelt 3.168808781402895E-08"
+
+      default_fraction_till=" -till_fraction_coverage ${fraction_till}"
+      default_hydrology_enhancement="-hydrology_sliding_enhancement ${hydrology_enhancement}"
+      model_name="hydrologyEvan"
+      hydrology_model="-hydrology ${model_name} ${default_fraction_till} ${default_hydrology_enhancement} -hydrology_fraction_from_surface 0.05"
+#       model_name="null"
+#      hydrology_model=" -hydrology ${model_name} "
+      #=========== marineice =====================================
+#      marineice=" -pik  -calving eigen_calving,thickness_calving  -thickness_calving_threshold 200.0 "
+
+      marineice=" -pik  -calving depth_calving   "
+
+
+      #=========== surface =======================================
+      surface=" pdd  "
+      #=========== atmosphere components ==========================
+      #atmosphere=" given  -atmosphere_given_file  ${inclim}  -atmosphere_given_period 1  "
+      #atmosphere=" index  -atmosphere_index_climate_file  ${inclim}  -atmosphere_index_index_file ${inindex}   -temp_lapse_rate  0   -precip_decay_rate  0.75  -precip_thresh_height  0  "
+      atmosphere=" index  -atmosphere_index_file ${inindex}  -temp_lapse_rate 0.0  -precip_decay_rate 0.75  -precip_thresh_height 0.0 "
+
+      #=========== ocean components =================================
+#      ocean=" pik,delta_SL  -meltfactor_pik  1e-2  -ocean_delta_SL_file  ${insealevel}   "
+      ocean=" pik  -meltfactor_pik  1e-2 "
+      #=========== output set ================================================
+      save_ex=" -extra_file  $fexout  -extra_times  ${ystart}:${dy}:${yend}  -extra_vars  thk,usurf,mask,velsurf_mag "
+      save_ts=" -ts_file  $ftsout  -ts_times ${ystart}:${dy}:${yend} "          
+      save_snap="  -save_file  snap  -save_times  ${yy}:${ysnap}:${yend}  -save_size big  -save_split ${restart} "
+      #save_snap=" "
+      save_size=" -o_size big "
+      #
+  #        -config  $file_config 
+      cmd="$pismmpi  -n  $ncores  \
+           $pismrun  -i  $input   $resol   $skip  $calendar  \
+           $hydrology_model \
+          -stress_balance  $dynamics  $subglacier $marineice  \
+          -surface  $surface  \
+          -atmosphere  $atmosphere  \
+          -ocean  $ocean  \
+          -ys ${ystart} -ye ${yend}    \
+          $save_ex  $exapp   \
+          $save_ts  $tsapp   \
+          -o  ${fout}  $save_size  $save_snap "          
+      echo "======> The time duration: $ystart  $yend  "
+      echo $cmd
+      $cmd
+                                                                           
+}
+#### end.==============================================================================================
+
+
+
+ncores=72
+resolution="20km"
+
+input_direc=/work/ollie/egowan/PISM/pism_branch/pism_blackboard/
+
+
+inbound="pism_start.nc"
+boots="boots_T"    #"boots_T"/"boots_F"  
+ystart=0
+yend=40000
+ftsout=ts_pism.nc   
+fexout=ex_pism.nc 
+fout=out_pism.nc                                                            
+inindex=climate.nc
+insealevel="nothing" # no sea level
+
+# uncomment to append to the ex_pism.nc and ts_pism.nc files"
+#restart="-extra_append"
+restart=" "
+
+date
+
+PISM_run   $ncores   $resolution   $inbound   $boots  $ystart  $yend  $ftsout   $fexout  $fout   $inindex   $insealevel ${restart} -verbose 5
+
+date
+
+
+
+
