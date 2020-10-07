@@ -162,7 +162,7 @@ restart=" "
 
 date
 
-PISM_run   $ncores   $resolution   $inbound   $boots  $ystart  $yend  $ftsout   $fexout  $fout   $inindex   $insealevel ${restart} -verbose 5
+PISM_run   $ncores   $resolution   $inbound   $boots  $ystart  $yend  $ftsout   $fexout  $fout   $inindex   $insealevel ${restart} 
 
 date
 
