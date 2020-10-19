@@ -60,7 +60,7 @@ grdmath mask1.nc mask2.nc MUL 0 NAN = mask3.nc
 max_diff=52.5
 min_diff=-52.5
 
-makecpt -Cpolar -T${min_diff}/${max_diff}/5 -I > shades_diff.cpt
+makecpt -Cpolar -T${min_diff}/${max_diff}/5  > shades_diff.cpt
 
 
 grdmath ${file1}?velsurf_mag 0 DENAN ${file2}?velsurf_mag 0 DENAN SUB = diff.nc
