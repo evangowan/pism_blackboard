@@ -113,9 +113,9 @@ file_config=pism_config_modif.nc
 #      ocean=" pik,delta_SL  -meltfactor_pik  1e-2  -ocean_delta_SL_file  ${insealevel}   "
       ocean=" pik  -meltfactor_pik  1e-2 "
       #=========== output set ================================================
-      save_ex=" -extra_file  $fexout  -extra_times  ${ystart}:${dy}:${yend}  -extra_vars  thk,usurf,mask,velsurf_mag "
-      save_ts=" -ts_file  $ftsout  -ts_times ${ystart}:${dy}:${yend} "          
-      save_snap="  -save_file  snap  -save_times  ${yy}:${ysnap}:${yend}  -save_size big  -save_split ${restart} "
+      save_ex=" -extra_file  $fexout  -extra_times  0:${dy}:${yend}  -extra_vars  thk,usurf,mask,velsurf_mag "
+      save_ts=" -ts_file  $ftsout  -ts_times 0:${dy}:${yend} "          
+      save_snap="  -save_file  snap  -save_times  0:${ysnap}:${yend}  -save_size big  -save_split ${restart} "
       #save_snap=" "
       save_size=" -o_size big "
       #
