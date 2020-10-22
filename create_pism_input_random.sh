@@ -7,13 +7,11 @@ folder=nc
 
 mkdir ${folder}
 
-
-mv ${folder}/climate_random.nc .
+mv ${folder}/climate.nc .
 
 rm ${folder}/*
 
-
-mv climate_random.nc ${folder}
+mv climate.nc ${folder}
 
 resolution=20 # in km
 resolution_m=${resolution}000 # in m
@@ -21,7 +19,7 @@ resolution_m=${resolution}000 # in m
 
 # create index
 
-time_interval=100
+time_interval=1
 time_start=0
 time_end=40000
 
@@ -34,9 +32,12 @@ xyz2grd tbnds.txt -G${folder}/ts_temp.nc -R0/1/${time_start}/${time_end} -I1/${t
 
 
 
-# equation for making the glacial index
+# equation for making the glacial index, now with random noise!
 #ncap2 -Oh -s 'glac_index[y]=1.2 * cos( 2 *  3.14159265359 / 40000 * (y-20000  )) / 2 + 0.6;' ${folder}/ts_temp.nc ${folder}/ts_temp2.nc
-ncap2 -Oh -s 'glac_index[y]=cos( 2 *  3.14159265359 / 40000 * (y-20000  )) / 2 + 0.5;' ${folder}/ts_temp.nc ${folder}/ts_temp2.nc
+ncap2 -Oh -s '; glac_index[y]=cos( 2 *  3.14159265359 / 40000 * (y-20000  )) / 2 + 0.5 + gsl_rng_uniform(y)*0.2 - 0.1;' ${folder}/ts_temp.nc ${folder}/ts_temp2.nc
+
+
+
 
 ncrename -d y,time -v y,time -dx,bnds -v x,bnds -v z,tbnds  ${folder}/ts_temp2.nc
 
@@ -764,8 +765,8 @@ do
 ncrcat -O ${folder}/${variable}_??.nc  nc/${variable}.nc
 done
 
-cdo -O merge ${folder}/precip_0.nc ${folder}/precip_1.nc ${folder}/airtemp_0.nc ${folder}/airtemp_1.nc ${folder}/usurf_0.nc ${folder}/usurf_1.nc ${folder}/climate.nc
-ncks -v glac_index,tbnds -A ${folder}/glacial_index.nc ${folder}/climate.nc
+cdo -O merge ${folder}/precip_0.nc ${folder}/precip_1.nc ${folder}/airtemp_0.nc ${folder}/airtemp_1.nc ${folder}/usurf_0.nc ${folder}/usurf_1.nc ${folder}/climate_random.nc
+ncks -v glac_index,tbnds -A ${folder}/glacial_index.nc ${folder}/climate_random.nc
 
  
 cdo -O merge  ${folder}/bheatflx.nc ${folder}/thk.nc ${folder}/topg.nc ${folder}/tillphi.nc ${folder}/tillcover.nc  ${folder}/pism_start.nc
