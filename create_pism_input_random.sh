@@ -25,8 +25,11 @@ time_end=40000
 
 seq ${time_start} ${time_interval} ${time_end} > time_values.txt
 
-awk -v start_val=${time_start} -v interval=${time_interval} '{if($1==start_val) {print 0, $1, $1} else {print 0, $1, $1-interval/2}}' time_values.txt > tbnds.txt
-awk -v end_val=${time_end} -v interval=${time_interval} '{if($1==end_val) {print 1, $1, $1} else {print 1, $1, $1+interval/2}}' time_values.txt >> tbnds.txt
+#awk -v start_val=${time_start} -v interval=${time_interval} '{if($1==start_val) {print 0, $1, $1} else {print 0, $1, $1-interval/2}}' time_values.txt > tbnds.txt
+#awk -v end_val=${time_end} -v interval=${time_interval} '{if($1==end_val) {print 1, $1, $1} else {print 1, $1, $1+interval/2}}' time_values.txt >> tbnds.txt
+
+awk -v interval=${time_interval} '{print 0, $1, $1}' time_values.txt > tbnds.txt
+awk -v interval=${time_interval} '{print 1, $1, $1+1}' time_values.txt >> tbnds.txt
 
 xyz2grd tbnds.txt -G${folder}/ts_temp.nc -R0/1/${time_start}/${time_end} -I1/${time_interval}
 
@@ -65,7 +68,7 @@ ncatted -a calendar,glac_index,o,c,"365_day" ${folder}/ts_temp2.nc
 
 mv ${folder}/ts_temp2.nc ${folder}/glacial_index.nc
 
-rm ${folder}/ts_temp.nc
+#rm ${folder}/ts_temp.nc
 
 
 
