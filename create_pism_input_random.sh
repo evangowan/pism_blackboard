@@ -41,8 +41,13 @@ ncap2 -Oh -s '; glac_index[y]=cos( 2 *  3.14159265359 / 40000 * (y-20000  )) / 2
 
 
 
+# have to switch to netCDF3 to avoid bugs
+ncks -O -3 ${folder}/ts_temp2.nc ${folder}/ts_temp2_temp.nc
 
-ncrename -d y,time -v y,time -dx,bnds -v x,bnds -v z,tbnds  ${folder}/ts_temp2.nc
+
+ncrename -d y,time -v y,time -dx,bnds -v x,bnds -v z,tbnds  ${folder}/ts_temp2_temp.nc
+
+ncks -O -4 ${folder}/ts_temp2_temp.nc ${folder}/ts_temp2.nc
 
 
 ncatted  -a  long_name,time,o,c,"Time (years before present)"  ${folder}/ts_temp2.nc
