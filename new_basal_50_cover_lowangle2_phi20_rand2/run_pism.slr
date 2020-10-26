@@ -153,7 +153,7 @@ yend=40000
 ftsout=ts_pism.nc   
 fexout=ex_pism.nc 
 fout=out_pism.nc                                                            
-inindex=climate_random.nc
+inindex=climate_random2.nc
 insealevel="nothing" # no sea level
 
 # uncomment to append to the ex_pism.nc and ts_pism.nc files"
