@@ -8,10 +8,12 @@ folder=nc
 mkdir ${folder}
 
 mv ${folder}/climate.nc .
+mv ${folder}/climate_random2.nc .
 
 rm ${folder}/*
 
 mv climate.nc ${folder}
+mv climate_random2.nc ${folder}
 
 resolution=20 # in km
 resolution_m=${resolution}000 # in m

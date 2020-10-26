@@ -7,15 +7,14 @@ folder=nc
 
 mkdir ${folder}
 
-
+mv ${folder}/climate.nc .
 mv ${folder}/climate_random.nc .
-mv ${folder}/climate_random2.nc .
+
 
 rm ${folder}/*
 
-
+mv climate.nc ${folder}
 mv climate_random.nc ${folder}
-mv climate_random2.nc ${folder}
 
 resolution=20 # in km
 resolution_m=${resolution}000 # in m
@@ -23,24 +22,35 @@ resolution_m=${resolution}000 # in m
 
 # create index
 
-time_interval=100
+time_interval=1
 time_start=0
 time_end=40000
 
 seq ${time_start} ${time_interval} ${time_end} > time_values.txt
 
-awk -v start_val=${time_start} -v interval=${time_interval} '{if($1==start_val) {print 0, $1, $1} else {print 0, $1, $1-interval/2}}' time_values.txt > tbnds.txt
-awk -v end_val=${time_end} -v interval=${time_interval} '{if($1==end_val) {print 1, $1, $1} else {print 1, $1, $1+interval/2}}' time_values.txt >> tbnds.txt
+#awk -v start_val=${time_start} -v interval=${time_interval} '{if($1==start_val) {print 0, $1, $1} else {print 0, $1, $1-interval/2}}' time_values.txt > tbnds.txt
+#awk -v end_val=${time_end} -v interval=${time_interval} '{if($1==end_val) {print 1, $1, $1} else {print 1, $1, $1+interval/2}}' time_values.txt >> tbnds.txt
+
+awk -v interval=${time_interval} '{print 0, $1, $1}' time_values.txt > tbnds.txt
+awk -v interval=${time_interval} '{print 1, $1, $1+1}' time_values.txt >> tbnds.txt
 
 xyz2grd tbnds.txt -G${folder}/ts_temp.nc -R0/1/${time_start}/${time_end} -I1/${time_interval}
 
 
 
-# equation for making the glacial index
+# equation for making the glacial index, now with random noise!
 #ncap2 -Oh -s 'glac_index[y]=1.2 * cos( 2 *  3.14159265359 / 40000 * (y-20000  )) / 2 + 0.6;' ${folder}/ts_temp.nc ${folder}/ts_temp2.nc
-ncap2 -Oh -s 'glac_index[y]=cos( 2 *  3.14159265359 / 40000 * (y-20000  )) / 2 + 0.5;' ${folder}/ts_temp.nc ${folder}/ts_temp2.nc
+ncap2 -Oh -s '; glac_index[y]=cos( 2 *  3.14159265359 / 40000 * (y-20000  )) / 2 + 0.5 + gsl_rng_uniform(y)*0.4 - 0.2;' ${folder}/ts_temp.nc ${folder}/ts_temp2.nc
 
-ncrename -d y,time -v y,time -dx,bnds -v x,bnds -v z,tbnds  ${folder}/ts_temp2.nc
+
+
+# have to switch to netCDF3 to avoid bugs
+ncks -O -3 ${folder}/ts_temp2.nc ${folder}/ts_temp2_temp.nc
+
+
+ncrename -d y,time -v y,time -dx,bnds -v x,bnds -v z,tbnds  ${folder}/ts_temp2_temp.nc
+
+ncks -O -4 ${folder}/ts_temp2_temp.nc ${folder}/ts_temp2.nc
 
 
 ncatted  -a  long_name,time,o,c,"Time (years before present)"  ${folder}/ts_temp2.nc
@@ -66,7 +76,7 @@ ncatted -a calendar,glac_index,o,c,"365_day" ${folder}/ts_temp2.nc
 
 mv ${folder}/ts_temp2.nc ${folder}/glacial_index.nc
 
-rm ${folder}/ts_temp.nc
+#rm ${folder}/ts_temp.nc
 
 
 
@@ -766,8 +776,8 @@ do
 ncrcat -O ${folder}/${variable}_??.nc  nc/${variable}.nc
 done
 
-cdo -O merge ${folder}/precip_0.nc ${folder}/precip_1.nc ${folder}/airtemp_0.nc ${folder}/airtemp_1.nc ${folder}/usurf_0.nc ${folder}/usurf_1.nc ${folder}/climate.nc
-ncks -v glac_index,tbnds -A ${folder}/glacial_index.nc ${folder}/climate.nc
+cdo -O merge ${folder}/precip_0.nc ${folder}/precip_1.nc ${folder}/airtemp_0.nc ${folder}/airtemp_1.nc ${folder}/usurf_0.nc ${folder}/usurf_1.nc ${folder}/climate_random2.nc
+ncks -v glac_index,tbnds -A ${folder}/glacial_index.nc ${folder}/climate_random2.nc
 
  
 cdo -O merge  ${folder}/bheatflx.nc ${folder}/thk.nc ${folder}/topg.nc ${folder}/tillphi.nc ${folder}/tillcover.nc  ${folder}/pism_start.nc
