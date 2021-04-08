@@ -55,7 +55,7 @@ tick_interval=250
 
 gmt makecpt -Cjet -T${min_val}/${max_val}/${interval} -I > iceshades_coarse.cpt
 
-plot=ice_surface.ps
+plot=ice_surface_ts.ps
 
 gmt grdmath ${file1}?usurf 250 GT 0 NAN ${file1}?usurf MUL = usurf.nc
 
@@ -183,7 +183,7 @@ y2=3300000
 
 python3 ${path}/extract_ts.py ${y1} ${y2}
 
-plot="thickness_compare.ps"
+
 
 gmt psxy ts_1.txt -Y-5 ${J_options} ${R_options} -P -K -O -Wthick,blue >> ${plot}
 
