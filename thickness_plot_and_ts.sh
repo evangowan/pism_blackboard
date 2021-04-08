@@ -2,7 +2,9 @@
 
 path="/work/ollie/egowan/PISM/pism_blackboard"
 
-file1=$1
+time=$1
+
+file1=snap_${time}.000.nc
 
 percent_cover=$2
 
@@ -187,7 +189,7 @@ python3 ${path}/extract_ts.py ${y1} ${y2}
 
 
 x_position="5c"
-y_position="6c"
+y_position="4.5c"
 
 
 
@@ -205,8 +207,14 @@ gmt psxy << END_CAT ${J_options} ${R_options}  -Xa${x_position} -Ya${y_position}
 13000 1300
 END_CAT
 
+gmt psxy << END_CAT ${J_options} ${R_options}  -Xa${x_position} -Ya${y_position} -P -K -O -Wthick,black,- >> ${plot}
+${time} ${ymin}
+${time} ${ymax}
+END_CAT
+
 gmt pstext << END_CAT  ${J_options} ${R_options} -Xa${x_position} -Ya${y_position} -P  -O -F+f10p,Helvetica,black+jlm >> ${plot}
 13500 1500 ${percent_cover}% cover
 13500 1300 100% cover
 END_CAT
+
 
