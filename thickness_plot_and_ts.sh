@@ -38,7 +38,7 @@ map_width=6c
 J_options="-JX${map_width}/0"
 
 x_position="3c"
-y_position="8c"
+y_position="14c"
 
 max_val=1750
 min_val=-1500
@@ -184,22 +184,26 @@ y2=3300000
 python3 ${path}/extract_ts.py ${y1} ${y2}
 
 
+x_position="3c"
+y_position="6c"
 
-gmt psxy ts_1.txt -Y-5 ${J_options} ${R_options} -P -K -O -Wthick,blue >> ${plot}
 
-gmt psxy ts_2.txt  -BWSen -Bxa${xint}f${xsubint}+l"Time (years)" -Bya${yint}f${ysubint}+l"Ice Thickness (m)"   ${J_options} ${R_options} -P -O -K -Wthick,red >> ${plot}
 
-gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,blue >> ${plot}
+gmt psxy ts_1.txt -Xa${x_position} -Ya${y_position} ${J_options} ${R_options} -P -K -O -Wthick,blue >> ${plot}
+
+gmt psxy ts_2.txt -Xa${x_position} -Ya${y_position} -BWSen -Bxa${xint}f${xsubint}+l"Time (years)" -Bya${yint}f${ysubint}+l"Ice Thickness (m)"   ${J_options} ${R_options} -P -O -K -Wthick,red >> ${plot}
+
+gmt psxy << END_CAT ${J_options} ${R_options} -Xa${x_position} -Ya${y_position} -P -K -O -Wthick,blue >> ${plot}
 11000 1500
 13000 1500
 END_CAT
 
-gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,red >> ${plot}
+gmt psxy << END_CAT ${J_options} ${R_options}  -Xa${x_position} -Ya${y_position} -P -K -O -Wthick,red >> ${plot}
 11000 1300
 13000 1300
 END_CAT
 
-gmt pstext << END_CAT  ${J_options} ${R_options} -P  -O -F+f10p,Helvetica,black+jlm >> ${plot}
+gmt pstext << END_CAT  ${J_options} ${R_options} -Xa${x_position} -Ya${y_position} -P  -O -F+f10p,Helvetica,black+jlm >> ${plot}
 13500 1500 ${percent_cover}% cover
 13500 1300 100% cover
 END_CAT
