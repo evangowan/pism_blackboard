@@ -80,7 +80,7 @@ ice surface elevation
 END
 
 x_position_s=-3c
-y_position_s=12c
+y_position_s=10c
 gmt psscale  -Ya${y_position_s} -Xa${x_position_s} -Dx9c/2c/6c/0.5ch -P -O -K -Bx500+250f250+l"Ice elevation (m)" -G250/1750 -Ciceshades.cpt --FONT_LABEL=14p -V  >> $plot
 
 
@@ -118,12 +118,12 @@ till cover (%)
 END
 
 x_position_s=5c
-y_position_s=8c
+y_position_s=10c
 gmt psscale  -Ya${y_position_s} -Xa${x_position_s} -Dx9c/2c/6c/0.5ch -P -K -O -Bx50f25+l"Till cover (%)" -G0/100 -Ccover.cpt --FONT_LABEL=14p -V  >> $plot
 
 
 x_position=7c
-y_position=8.5c
+y_position=9c
 
 gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Sa0.4 -Gwhite -Wthick,black >> ${plot}
 500000 500000
@@ -135,7 +135,7 @@ gmt pstext << END_CAT  -Ya${y_position} -Xa${x_position}  ${R_options} ${J_optio
 END_CAT
 
 x_position=10c
-y_position=8.5c
+y_position=9c
 
 gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Ss0.4 -Gwhite -Wthick,black >> ${plot}
 500000 500000
@@ -186,8 +186,8 @@ y2=3300000
 python3 ${path}/extract_ts.py ${y1} ${y2}
 
 
-x_position="3c"
-y_position="4c"
+x_position="5c"
+y_position="6c"
 
 
 
