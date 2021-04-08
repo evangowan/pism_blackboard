@@ -4,7 +4,14 @@ path="/work/ollie/egowan/PISM/pism_blackboard"
 
 time=$1
 
-file1=snap_${time}.000.nc
+#file1=snap_${time}.000.nc
+
+time_id=$(echo ${time} / 50 | bc)
+
+file1=ex_pism.nc?usurf[${time_id}]
+
+file_snap="snap_0.000.nc"
+
 
 percent_cover=$2
 
@@ -61,7 +68,7 @@ gmt makecpt -Cjet -T${min_val}/${max_val}/${interval} -I > iceshades_coarse.cpt
 
 plot=ice_surface_ts.ps
 
-gmt grdmath ${file1}?usurf 250 GT 0 NAN ${file1}?usurf MUL = usurf.nc
+gmt grdmath ${file1} 250 GT 0 NAN ${file1} MUL = usurf.nc
 
 gmt grdimage usurf.nc -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -P -Ciceshades.cpt -V -nb > ${plot}
 
@@ -99,7 +106,7 @@ tick_interval=25
 gmt makecpt -Cbatlow -T${min_val}/${max_val}/${interval} -I > cover.cpt
 
 
-gmt grdmath ${file1}?tillcover 100 MUL = tillcover.nc
+gmt grdmath ${file_snap}?tillcover 100 MUL = tillcover.nc
 
 
 gmt grdimage tillcover.nc -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Ccover.cpt -V -nb >> ${plot}
