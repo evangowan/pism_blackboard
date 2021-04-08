@@ -42,21 +42,21 @@ python3 ${path}/extract_ts.py ${y1} ${y2}
 
 plot="thickness_compare.ps"
 
-psxy ts_1.txt  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
+gmt psxy ts_1.txt  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
 
-psxy ts_2.txt  -BWSen -Bxa${xint}f${xsubint}+l"Time (years)" -Bya${yint}f${ysubint}+l"Ice Thickness (m)"   ${J_options} ${R_options} -P -O -K -Wthick,red >> ${plot}
+gmt psxy ts_2.txt  -BWSen -Bxa${xint}f${xsubint}+l"Time (years)" -Bya${yint}f${ysubint}+l"Ice Thickness (m)"   ${J_options} ${R_options} -P -O -K -Wthick,red >> ${plot}
 
-psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,blue >> ${plot}
+gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,blue >> ${plot}
 11000 1500
 13000 1500
 END_CAT
 
-psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,red >> ${plot}
+gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,red >> ${plot}
 11000 1300
 13000 1300
 END_CAT
 
-pstext << END_CAT  ${J_options} ${R_options} -P  -O -F+f10p,Helvetica,black+jlm >> ${plot}
+gmt pstext << END_CAT  ${J_options} ${R_options} -P  -O -F+f10p,Helvetica,black+jlm >> ${plot}
 13500 1500 ${percent_cover}% cover
 13500 1300 100% cover
 END_CAT
