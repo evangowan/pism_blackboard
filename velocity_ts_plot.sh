@@ -74,7 +74,7 @@ ysubint=5
 
 R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
-gmt psxy ts_1.txt -Y${height}  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
+gmt psxy ts_1.txt -Y${height}  ${J_options} ${R_options} -O -P -K -Wthick,blue >> ${plot}
 
 gmt psxy ts_2.txt  -BWSen  -Bya${yint}+l"Sliding mechanism"   ${J_options} ${R_options} -P -O -K -Wthick,red >> ${plot}
 
@@ -89,7 +89,7 @@ ysubint=5
 
 R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
-gmt psxy ts_1.txt -Y${height}  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
+gmt psxy ts_1.txt -Y${height}  ${J_options} ${R_options} -P -K -O -Wthick,blue >> ${plot}
 
 gmt psxy ts_2.txt  -BWSen  -Bya${yint}+l"Hydrology type"   ${J_options} ${R_options} -P -O -K -Wthick,red >> ${plot}
 
@@ -108,10 +108,10 @@ J_options="-JX12c/${height}l"
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ts_1.txt > ts_1_m.txt
 
-gmt psxy ts_1_m.txt -Y${height}  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
+gmt psxy ts_1_m.txt -Y${height}  ${J_options} ${R_options} -P -O -K -Wthick,blue >> ${plot}
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ts_2.txt > ts_2_m.txt
 
-gmt psxy ts_2_m.txt  -BWSen  -Byal+l"Water volume flux (m@+3@+/s)"   ${J_options} ${R_options} -P -O  -Wthick,red >> ${plot}
+gmt psxy ts_2_m.txt  -BWSen  -Byl+l"Water volume flux (m@+3@+/s)"   ${J_options} ${R_options} -P -O  -Wthick,red >> ${plot}
 
 
