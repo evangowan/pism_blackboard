@@ -112,6 +112,6 @@ gmt psxy ts_1_m.txt -Y${height}  ${J_options} ${R_options} -P -O -K -Wthick,blue
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ts_2.txt > ts_2_m.txt
 
-gmt psxy ts_2_m.txt  -BWSen  -Byl+l"Water volume flux (m@+3@+/s)"   ${J_options} ${R_options} -P -O  -Wthick,red >> ${plot}
+gmt psxy ts_2_m.txt  -BWSen  -Bya1f3p+l"Water volume flux (m@+3@+/s)"   ${J_options} ${R_options} -P -O  -Wthick,red >> ${plot}
 
 
