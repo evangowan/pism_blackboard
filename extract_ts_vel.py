@@ -49,10 +49,10 @@ for y_loc in yval:
 	h = var[:,iy,ix]
 
 	multiplied_time = times2 / (365.0 * 24.0 * 3600.0)
-	multiplied_vel = np.array(h)  / (365.0 * 24.0 * 3600.0)
 
 
-	combined = np.column_stack((np.array(multiplied_time), multiplied_vel))
+
+	combined = np.column_stack((np.array(multiplied_time), np.array(h)))
 
 	filename=f"ts_{counter}.txt"
 	print(filename)

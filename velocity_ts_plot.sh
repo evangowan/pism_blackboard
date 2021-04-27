@@ -38,7 +38,7 @@ y2=3300000
 #y2=3400000
 
 
-python3 ${path}/extract_ts.py ${y1} ${y2}
+python3 ${path}/extract_ts_vel.py ${y1} ${y2}
 
 plot="velocity_compare.ps"
 
