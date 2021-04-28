@@ -8,8 +8,8 @@ height=4c
 
 percent_cover=$1
 
-xmin=25040
-xmax=25050
+xmin=25015
+xmax=25020
 xint=2
 xsubint=0.5
 ymin=0
@@ -51,18 +51,18 @@ gmt psxy ts_1.txt  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
 gmt psxy ts_2.txt  -BWSen -Bxa${xint}f${xsubint}+l"Time (years)" -Bya${yint}f${ysubint}+l"Velocity (m/yr)"   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
 
 gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,blue >> ${plot}
-25041 27
-25042 27
+25016 27
+25017 27
 END_CAT
 
 gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,red >> ${plot}
-25041 22
-25042 22
+25016 22
+25017 22
 END_CAT
 
 gmt pstext << END_CAT  ${J_options} ${R_options} -P -K -O -F+f10p,Helvetica,black+jlm >> ${plot}
-25042.5 27 ${percent_cover}% cover
-25042.5 22 100% cover
+25017.5 27 ${percent_cover}% cover
+25017.5 22 100% cover
 END_CAT
 
 python3 ${path}/extract_ts_sliding.py ${y1} ${y2}
