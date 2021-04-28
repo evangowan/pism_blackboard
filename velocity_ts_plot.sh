@@ -68,10 +68,10 @@ END_CAT
 # sliding mechanism
 
 cat << EOF >| yannots.txt
-0 i none
-1 i sed
-2 i hydro
-3 i sgl
+0 a none
+1 a sed
+2 a hydro
+3 a sgl
 EOF
 
 
@@ -96,10 +96,10 @@ gmt psxy ts_2.txt  -BWSen -Bpycyannots.txt+l"Sliding mechanism"  ${J_options} ${
 # hydrology type
 
 cat << EOF >| yannots.txt
-0 i dry
-1 i tun
-2 i cav
-3 i ob
+0 a dry
+1 a tun
+2 a cav
+3 a ob
 EOF
 
 
