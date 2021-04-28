@@ -2,7 +2,7 @@
 
 path="/work/ollie/egowan/PISM/pism_blackboard"
 
-fonts=" --FONT_ANNOT_PRIMARY=10p --FONT_ANNOT_SECONDARY=8p --FONT_LABEL=10p --FONT_TITLE=10p --MAP_TICK_LENGTH_PRIMARY=2p --MAP_ANNOT_OFFSET_PRIMARY=2p --MAP_LABEL_OFFSET=4p "
+fonts=" --FONT_ANNOT_PRIMARY=10p --FONT_ANNOT_SECONDARY=8p --FONT_LABEL=10p --FONT_TITLE=10p --MAP_TICK_LENGTH_PRIMARY=4p --MAP_ANNOT_OFFSET_PRIMARY=2p --MAP_LABEL_OFFSET=4p "
 
 height=4c
 
@@ -10,10 +10,10 @@ percent_cover=$1
 
 xmin=25015
 xmax=25020
-xint=2
-xsubint=0.5
+xint=1
+xsubint=0.25
 ymin=0
-ymax=30
+ymax=29
 yint=10
 ysubint=5
 
@@ -48,7 +48,7 @@ plot="velocity_compare.ps"
 
 gmt psxy ts_1.txt  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
 
-gmt psxy ts_2.txt  -BWSen -Bxa${xint}f${xsubint}+l"Time (years)" -Bya${yint}f${ysubint}+l"Velocity (m/yr)"   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
+gmt psxy ts_2.txt  -BWSen -Bxa${xint}f${xsubint}+l"Model Time (years)" -Bya${yint}f${ysubint}+l"Velocity (m/yr)"   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
 
 gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,blue >> ${plot}
 25016 27
@@ -69,8 +69,8 @@ python3 ${path}/extract_ts_sliding.py ${y1} ${y2}
 
 
 
-ymin=0
-ymax=4
+ymin=-.5
+ymax=3.5
 yint=1
 ysubint=5
 
@@ -84,8 +84,8 @@ python3 ${path}/extract_ts_hydrology.py ${y1} ${y2}
 
 
 
-ymin=0
-ymax=4
+ymin=-0.5
+ymax=3.5
 yint=1
 ysubint=5
 
