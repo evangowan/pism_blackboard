@@ -65,6 +65,16 @@ gmt pstext << END_CAT  ${J_options} ${R_options} -P -K -O -F+f10p,Helvetica,blac
 25016 24 100% cover
 END_CAT
 
+# sliding mechanism
+
+cat << EOF >| yannots.txt
+0 none
+1 sed
+2 hydro
+3 sgl
+EOF
+
+
 python3 ${path}/extract_ts_sliding.py ${y1} ${y2}
 
 
@@ -78,7 +88,21 @@ R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 gmt psxy ts_1.txt -Y${height}  ${J_options} ${R_options} -O -P -K -Wthick,blue >> ${plot}
 
-gmt psxy ts_2.txt  -BWSen  -Bya${yint}+l"Sliding mechanism"   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
+#gmt psxy ts_2.txt  -BWSen  -Bya${yint}+l"Sliding mechanism"   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
+
+gmt psxy ts_2.txt  -BWSen -Bpycyannots.txt+l"Sliding mechanism"  ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
+
+
+# hydrology type
+
+cat << EOF >| yannots.txt
+0 dry
+1 tun
+2 cav
+3 ob
+EOF
+
+
 
 python3 ${path}/extract_ts_hydrology.py ${y1} ${y2}
 
@@ -93,9 +117,9 @@ R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 gmt psxy ts_1.txt -Y${height}  ${J_options} ${R_options} -P -K -O -Wthick,blue >> ${plot}
 
-gmt psxy ts_2.txt  -BWSen  -Bya${yint}+l"Hydrology type"   ${J_options} ${R_options} -P -O -K -Wthick,red  ${fonts} >> ${plot}
+#gmt psxy ts_2.txt  -BWSen  -Bya${yint}+l"Hydrology type"   ${J_options} ${R_options} -P -O -K -Wthick,red  ${fonts} >> ${plot}
 
-
+gmt psxy ts_2.txt  -BWSen   -Bpycyannots.txt+l"Hydrology type"  ${J_options} ${R_options} -P -O -K -Wthick,red  ${fonts} >> ${plot}
 
 python3 ${path}/extract_ts_waterflux.py ${y1} ${y2}
 
