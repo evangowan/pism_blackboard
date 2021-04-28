@@ -51,18 +51,18 @@ gmt psxy ts_1.txt  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
 gmt psxy ts_2.txt  -BWSen -Bxa${xint}f${xsubint}+l"Model Time (years)" -Bya${yint}f${ysubint}+l"Velocity (m/yr)"   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
 
 gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,blue >> ${plot}
-25016 27
-25017 27
+25015.25 27
+25015.75 27
 END_CAT
 
 gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,red >> ${plot}
-25016 22
-25017 22
+25015.25 24
+25015.75 24
 END_CAT
 
 gmt pstext << END_CAT  ${J_options} ${R_options} -P -K -O -F+f10p,Helvetica,black+jlm >> ${plot}
-25017.5 27 ${percent_cover}% cover
-25017.5 22 100% cover
+25016 27 ${percent_cover}% cover
+25016 24 100% cover
 END_CAT
 
 python3 ${path}/extract_ts_sliding.py ${y1} ${y2}
