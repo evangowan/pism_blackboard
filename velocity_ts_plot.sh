@@ -136,6 +136,8 @@ gmt psxy ts_1.txt -Y${height}  ${J_options} ${R_options} -P -K -O -Wthick,blue >
 
 gmt psxy ts_2.txt  -BWSen   -Bpycyannots.txt  ${J_options} ${R_options} -P -O -K -Wthick,red  ${fonts} >> ${plot}
 
+y_mid=$( echo "${ymin} ${ymax}" | awk '{print ($1 + $2) / 2}')
+
 gmt pstext << END_CAT  ${J_options} ${R_options}  -P -K -O -F+f10p,Helvetica,black+jcb+a90 -N >> ${plot}
 ${y_label_position} ${y_mid} Hydrology type
 END_CAT
@@ -159,6 +161,8 @@ gmt psxy ts_1_m.txt -Y${height}  ${J_options} ${R_options} -P -O -K -Wthick,blue
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ts_2.txt > ts_2_m.txt
 
 gmt psxy ts_2_m.txt  -BWSen  -Bya1f3p   ${J_options} ${R_options} -P -K -O  -Wthick,red ${fonts} >> ${plot}
+
+y_mid=$( echo "${ymin} ${ymax}" | awk '{print 10^((log($1)/log(10) + log($2)/log(10)) / 2)}')
 
 gmt pstext << END_CAT  ${J_options} ${R_options}  -P -O -F+f10p,Helvetica,black+jcb+a90 -N >> ${plot}
 ${y_label_position} ${y_mid} Water volume flux (m@+3@+/s)
