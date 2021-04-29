@@ -17,6 +17,9 @@ ymax=29
 yint=10
 ysubint=5
 
+y_label_position=25014.5
+
+
 J_options="-JX12c/${height}"
 R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
@@ -48,7 +51,7 @@ plot="velocity_compare.ps"
 
 gmt psxy ts_1.txt  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
 
-gmt psxy ts_2.txt  -BWSen -Bxa${xint}f${xsubint}+l"Model Time (years)" -Bya${yint}f${ysubint}+l"Velocity (m/yr)"   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
+gmt psxy ts_2.txt  -BWSen -Bxa${xint}f${xsubint}+l"Model Time (years)" -Bya${yint}f${ysubint}   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
 
 gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,blue >> ${plot}
 25015.25 27
@@ -60,9 +63,15 @@ gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,red >> ${plot}
 25015.75 24
 END_CAT
 
-gmt pstext << END_CAT  ${J_options} ${R_options} -P -K -O -F+f10p,Helvetica,black+jlm >> ${plot}
+gmt pstext << END_CAT  ${J_options} ${R_options} -P -K -O -F+f10p,Helvetica,black+jlm+a-90 >> ${plot}
 25016 27 ${percent_cover}% cover
 25016 24 100% cover
+END_CAT
+
+y_mid=$( echo "${ymin} ${ymax}" | awk '{print ($1 + $2) / 2}')
+
+gmt text << END_CAT  ${J_options} ${R_options}  -P -K -O -F+f10p,Helvetica,black+jcb -N  >> ${plot}
+${y_label_position} ${y_mid} Velocity (m/yr)
 END_CAT
 
 # sliding mechanism
@@ -90,7 +99,13 @@ gmt psxy ts_1.txt -Y${height}  ${J_options} ${R_options} -O -P -K -Wthick,blue >
 
 #gmt psxy ts_2.txt  -BWSen  -Bya${yint}+l"Sliding mechanism"   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
 
-gmt psxy ts_2.txt  -BWSen -Bpycyannots.txt+l"Sliding mechanism"  ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
+gmt psxy ts_2.txt  -BWSen -Bpycyannots.txt  ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
+
+y_mid=$( echo "${ymin} ${ymax}" | awk '{print ($1 + $2) / 2}')
+
+gmt text << END_CAT  ${J_options} ${R_options}  -P -K -O -F+f10p,Helvetica,black+jcb -N >> ${plot}
+${y_label_position} ${y_mid} Sliding mechanism
+END_CAT
 
 
 # hydrology type
@@ -119,7 +134,12 @@ gmt psxy ts_1.txt -Y${height}  ${J_options} ${R_options} -P -K -O -Wthick,blue >
 
 #gmt psxy ts_2.txt  -BWSen  -Bya${yint}+l"Hydrology type"   ${J_options} ${R_options} -P -O -K -Wthick,red  ${fonts} >> ${plot}
 
-gmt psxy ts_2.txt  -BWSen   -Bpycyannots.txt+l"Hydrology type"  ${J_options} ${R_options} -P -O -K -Wthick,red  ${fonts} >> ${plot}
+gmt psxy ts_2.txt  -BWSen   -Bpycyannots.txt  ${J_options} ${R_options} -P -O -K -Wthick,red  ${fonts} >> ${plot}
+
+gmt text << END_CAT  ${J_options} ${R_options}  -P -K -O -F+f10p,Helvetica,black+jcb -N >> ${plot}
+${y_label_position} ${y_mid} Hydrology type
+END_CAT
+
 
 python3 ${path}/extract_ts_waterflux.py ${y1} ${y2}
 
@@ -138,6 +158,10 @@ gmt psxy ts_1_m.txt -Y${height}  ${J_options} ${R_options} -P -O -K -Wthick,blue
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ts_2.txt > ts_2_m.txt
 
-gmt psxy ts_2_m.txt  -BWSen  -Bya1f3p+l"Water volume flux (m@+3@+/s)"   ${J_options} ${R_options} -P -O  -Wthick,red ${fonts} >> ${plot}
+gmt psxy ts_2_m.txt  -BWSen  -Bya1f3p   ${J_options} ${R_options} -P -K -O  -Wthick,red ${fonts} >> ${plot}
+
+gmt text << END_CAT  ${J_options} ${R_options}  -P -O -F+f10p,Helvetica,black+jcb -N >> ${plot}
+${y_label_position} ${y_mid} Water volume flux (m@+3@+/s)
+END_CAT
 
 
