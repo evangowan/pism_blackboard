@@ -8,21 +8,6 @@ height=4c
 
 percent_cover=$1
 
-xmin=25015
-xmax=25020
-xint=1
-xsubint=0.25
-ymin=0
-ymax=29
-yint=10
-ysubint=5
-
-y_label_position=25014.5
-
-
-J_options="-JX12c/${height}"
-R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
-
 x=2000000
 
 
@@ -38,6 +23,21 @@ for intervals in $(seq 0 6)
 do
 
 
+
+xmin=25015
+xmax=25020
+xint=1
+xsubint=0.25
+ymin=0
+ymax=29
+yint=10
+ysubint=5
+
+y_label_position=25014.5
+
+
+J_options="-JX12c/${height}"
+R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 
 y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 100000}')
