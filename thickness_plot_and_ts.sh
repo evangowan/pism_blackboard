@@ -4,6 +4,8 @@ path="/work/ollie/egowan/PISM/pism_blackboard"
 
 time=$1
 
+percent_cover=$2
+
 #file1=snap_${time}.000.nc
 
 time_id=$(echo ${time} / 50 | bc)
@@ -12,12 +14,21 @@ file1=ex_pism.nc?usurf[${time_id}]
 
 file_snap="snap_0.000.nc"
 
+base_y1=1200000
+base_y2=2800000
 
-percent_cover=$2
+
+
+for intervals in $(seq 0 8)
+do
+
+
+
+
+y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 50000}')
+y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 50000}')
 
 x=2000000
-y1=1100000
-y2=2900000
 
 x_min=0
 x_max=4000000 # 4000 km
@@ -66,7 +77,7 @@ tick_interval=250
 
 gmt makecpt -Cjet -T${min_val}/${max_val}/${interval} -I > iceshades_coarse.cpt
 
-plot=ice_surface_ts.ps
+plot=ice_surface_ts_${intervals}.ps
 
 gmt grdmath ${file1} 250 GT 0 NAN ${file1} MUL = usurf.nc
 
@@ -170,27 +181,6 @@ ysubint=100
 J_options="-JX12c/4c"
 R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
-x=2000000
-
-y1=1100000
-y2=2900000
-
-y1=1000000
-y2=3000000
-
-
-y1=900000
-y2=3100000
-
-y1=800000
-y2=3200000
-
-y1=700000
-y2=3300000
-
-#y1=600000
-#y2=3400000
-
 
 python3 ${path}/extract_ts.py ${y1} ${y2}
 
@@ -224,4 +214,5 @@ gmt pstext << END_CAT  ${J_options} ${R_options} -Xa${x_position} -Ya${y_positio
 13500 1300 100% cover
 END_CAT
 
+done
 
