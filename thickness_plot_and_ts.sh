@@ -19,14 +19,14 @@ base_y2=2800000
 
 
 
-for intervals in $(seq 0 8)
+for intervals in $(seq 0 6)
 do
 
 
 
 
-y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 50000}')
-y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 50000}')
+y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 100000}')
+y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 100000}')
 
 x=2000000
 
