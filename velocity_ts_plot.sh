@@ -25,29 +25,28 @@ R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 x=2000000
 
-y1=1100000
-y2=2900000
 
-y1=1000000
-y2=3000000
-
-
-y1=900000
-y2=3100000
-
-y1=800000
-y2=3200000
-
-y1=700000
-y2=3300000
 
 #y1=600000
 #y2=3400000
 
+base_y1=1200000
+base_y2=2800000
+
+
+for intervals in $(seq 0 6)
+do
+
+
+
+
+y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 100000}')
+y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 100000}')
+
 
 python3 ${path}/extract_ts_vel.py ${y1} ${y2}
 
-plot="velocity_compare.ps"
+plot="velocity_compare_${intervals}.ps"
 
 gmt psxy ts_1.txt  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
 
@@ -168,4 +167,4 @@ gmt pstext << END_CAT  ${J_options} ${R_options}  -P -O -F+f12p,Helvetica,black+
 ${y_label_position} ${y_mid} Water volume flux (m@+3@+/s)
 END_CAT
 
-
+done
