@@ -85,19 +85,23 @@ gmt grdimage usurf.nc -Xa${x_position} -Ya${y_position}  ${R_options} ${J_option
 
 gmt grdcontour usurf.nc -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -Wthin,black -P -Ciceshades_coarse.cpt -An >> ${plot}
 
-gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Ss0.4 -Gwhite -Wthick,black >> ${plot}
+gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Ss0.4 -Gyellow -Wthick,black >> ${plot}
 ${x} ${y1}
 END_CAT
 
-gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Sa0.4 -Gwhite -Wthick,black >> ${plot}
+gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Sc0.32 -Gyellow -Wthick,black >> ${plot}
 ${x} ${y2}
 END_CAT
 
 gmt psbasemap -Ya${y_position} -Xa${x_position}  ${R_options_k} ${J_options} -Bx+l"x (km)" -By+l"y (km)"+ap  -Ba${half_tick_k}f${eighth_tick_k} -BSWen -K -P -O >> ${plot}
 
-gmt pstext << END  -Ya${y_position} -Xa${x_position}  ${R_options} ${J_options} -O -K -P -F+f10p,Helvetica,black+cTL -D0.1/-0.1 -Gwhite >> ${plot}
+gmt pstext << END  -Ya${y_position} -Xa${x_position}  ${R_options} ${J_options} -O -K -P -F+f10p,Helvetica,black+cTR -D-0.1/-0.1 -Gwhite >> ${plot}
 ice surface elevation
 END
+
+gmt pstext << END_CAT -Ya${y_position} -Xa${x_position}  ${J_options} ${R_options} -F+cTL+f12p -D0.1/-0.1 -P -Gwhite -K -O  >> ${plot}
+(a)
+END_CAT
 
 x_position_s=-3c
 y_position_s=10c
@@ -122,20 +126,24 @@ gmt grdmath ${file_snap}?tillcover 100 MUL = tillcover.nc
 
 gmt grdimage tillcover.nc -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Ccover.cpt -V -nb >> ${plot}
 
-gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Ss0.4 -Gwhite -Wthick,black >> ${plot}
+gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Ss0.4 -Gyellow -Wthick,black >> ${plot}
 ${x} ${y1}
 END_CAT
 
-gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Sa0.4 -Gwhite -Wthick,black >> ${plot}
+gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Sc0.32 -Gyellow -Wthick,black >> ${plot}
 ${x} ${y2}
 END_CAT
 
 
 gmt psbasemap -Ya${y_position} -Xa${x_position}  ${R_options_k} ${J_options} -Bx+l"x (km)" -By+l"y (km)"+ap  -Ba${half_tick_k}f${eighth_tick_k} -BSWen -K -P -O >> ${plot}
 
-gmt pstext << END  -Ya${y_position} -Xa${x_position}  ${R_options} ${J_options} -O -K -P -F+f10p,Helvetica,black+cTL -D0.1/-0.1 -Gwhite >> ${plot}
+gmt pstext << END  -Ya${y_position} -Xa${x_position}  ${R_options} ${J_options} -O -K -P -F+f10p,Helvetica,black+cTR -D-0.1/-0.1 -Gwhite >> ${plot}
 till cover (%)
 END
+
+gmt pstext << END_CAT -Ya${y_position} -Xa${x_position}  ${J_options} ${R_options} -F+cTL+f12p -D0.1/-0.1 -K -P -Gwhite  -O  >> ${plot}
+(b)
+END_CAT
 
 x_position_s=5c
 y_position_s=10c
@@ -145,25 +153,25 @@ gmt psscale  -Ya${y_position_s} -Xa${x_position_s} -Dx9c/2c/6c/0.5ch -P -K -O -B
 x_position=7c
 y_position=9c
 
-gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Sa0.4 -Gwhite -Wthick,black >> ${plot}
-500000 500000
+gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Sc0.32 -Gyellow -Wthick,black >> ${plot}
+550000 500000
 END_CAT
 
 
 gmt pstext << END_CAT  -Ya${y_position} -Xa${x_position}  ${R_options} ${J_options} -O -K -P -F+f10p,Helvetica,black+jML  >> ${plot}
-800000 500000 Reference
+850000 500000 Reference
 END_CAT
 
 x_position=10c
 y_position=9c
 
-gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Ss0.4 -Gwhite -Wthick,black >> ${plot}
-500000 500000
+gmt psxy << END_CAT -Xa${x_position} -Ya${y_position}  ${R_options} ${J_options} -K -O -P -Ss0.4 -Gyellow -Wthick,black >> ${plot}
+550000 500000
 END_CAT
 
 
 gmt pstext << END_CAT  -Ya${y_position} -Xa${x_position}  ${R_options} ${J_options} -O -K -P -F+f10p,Helvetica,black+jML  >> ${plot}
-800000 500000 Comparison
+850000 500000 Comparison
 END_CAT
 
 
@@ -195,13 +203,13 @@ gmt psxy ts_1.txt -Xa${x_position} -Ya${y_position} ${J_options} ${R_options} -P
 gmt psxy ts_2.txt -Xa${x_position} -Ya${y_position} -BWSen -Bxa${xint}f${xsubint}+l"Time (years)" -Bya${yint}f${ysubint}+l"Ice Thickness (m)"   ${J_options} ${R_options} -P -O -K -Wthick,red >> ${plot}
 
 gmt psxy << END_CAT ${J_options} ${R_options} -Xa${x_position} -Ya${y_position} -P -K -O -Wthick,blue >> ${plot}
-11000 1500
-13000 1500
+14500 1500
+16500 1500
 END_CAT
 
 gmt psxy << END_CAT ${J_options} ${R_options}  -Xa${x_position} -Ya${y_position} -P -K -O -Wthick,red >> ${plot}
-11000 1300
-13000 1300
+14500 1300
+16500 1300
 END_CAT
 
 gmt psxy << END_CAT ${J_options} ${R_options}  -Xa${x_position} -Ya${y_position} -P -K -O -Wthick,black,- >> ${plot}
@@ -209,9 +217,13 @@ ${time} ${ymin}
 ${time} ${ymax}
 END_CAT
 
-gmt pstext << END_CAT  ${J_options} ${R_options} -Xa${x_position} -Ya${y_position} -P  -O -F+f10p,Helvetica,black+jlm >> ${plot}
-13500 1500 ${percent_cover}% cover
-13500 1300 100% cover
+gmt pstext << END_CAT  ${J_options} ${R_options} -Xa${x_position} -Ya${y_position} -P  -K -O -F+f10p,Helvetica,black+jlm >> ${plot}
+17000 1500 ${percent_cover}% cover
+17000 1300 100% cover
+END_CAT
+
+gmt pstext << END_CAT -Xa${x_position} -Ya${y_position}  ${J_options} ${R_options} -F+cTL+f12p -D0.1/-0.1 -P  -O  >> ${plot}
+(c)
 END_CAT
 
 done
