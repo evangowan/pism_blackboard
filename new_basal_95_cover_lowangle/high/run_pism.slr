@@ -93,7 +93,7 @@ file_config=pism_config_modif.nc
       default_fraction_till=" -till_fraction_coverage ${fraction_till}"
       default_hydrology_enhancement="-hydrology_sliding_enhancement ${hydrology_enhancement}"
       model_name="hydrologyEvan"
-      hydrology_model="-hydrology ${model_name} ${default_fraction_till} ${default_hydrology_enhancement} -hydrology_fraction_from_surface 0.0"
+      hydrology_model="-hydrology ${model_name} ${default_fraction_till} ${default_hydrology_enhancement} -hydrology_fraction_from_surface 0.05"
 #       model_name="null"
 #      hydrology_model=" -hydrology ${model_name} "
       #=========== marineice =====================================
