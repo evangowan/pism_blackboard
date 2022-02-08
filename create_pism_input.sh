@@ -32,7 +32,7 @@ seq ${time_start} ${time_interval} ${time_end} > time_values.txt
 awk -v start_val=${time_start} -v interval=${time_interval} '{if($1==start_val) {print 0, $1, $1} else {print 0, $1, $1-interval/2}}' time_values.txt > tbnds.txt
 awk -v end_val=${time_end} -v interval=${time_interval} '{if($1==end_val) {print 1, $1, $1} else {print 1, $1, $1+interval/2}}' time_values.txt >> tbnds.txt
 
-xyz2grd tbnds.txt -G${folder}/ts_temp.nc -R0/1/${time_start}/${time_end} -I1/${time_interval}
+gmt xyz2grd tbnds.txt -G${folder}/ts_temp.nc -R0/1/${time_start}/${time_end} -I1/${time_interval}
 
 
 
@@ -96,13 +96,13 @@ fillval="NaN"
 remark="friction angle for till under grounded ice sheet"
 units="degrees"
 
-xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
 ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncap2 -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
@@ -146,13 +146,13 @@ fillval="NaN"
 remark="fraction of surface that is covered in till"
 units="1"
 
-xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
 ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncap2 -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
@@ -198,13 +198,13 @@ standard="bedrock_altitude"
 remark="bedrock surface elevation"
 units="m"
 
-xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
 ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncap2 -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
@@ -250,13 +250,13 @@ standard="land_ice_thickness"
 remark="Thickness of the Ice Sheet"
 units="m"
 
-xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
 ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncap2 -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
@@ -302,13 +302,13 @@ standard="geothermal flux"
 remark=""
 units="mW m-2"
 
-xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
 ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncap2 -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
@@ -353,13 +353,13 @@ fillval="250"
 remark="topography at time zero"
 units="m"
 
-xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 
 ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncap2 -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
@@ -405,12 +405,12 @@ fillval="250"
 remark="topography at time lgm"
 units="m"
 
-xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/${variable}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncrename -O -v z,${z_name_short} ${folder}/temp.nc
 
 ncks -O -3 ${folder}/temp.nc ${folder}/tempa.nc
-ncap -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
+ncap2 -O -s "${z_name_short}=double(${z_name_short})"  ${folder}/tempa.nc ${folder}/temp2a.nc
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
@@ -480,7 +480,7 @@ fillval="NaN"
 remark="Annual cycle 2m temperature"
 units="K"
 
-xyz2grd output/pi_temperature_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/pi_temperature_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 
@@ -489,7 +489,7 @@ ncrename -O -v z,${z_name_short} ${folder}/temp4.nc
 
 
 ncks -O -3 ${folder}/temp4.nc ${folder}/temp4a.nc
-ncap -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
+ncap2 -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
@@ -555,7 +555,7 @@ fillval="NaN"
 remark="Annual cycle 2m temperature"
 units="K"
 
-xyz2grd output/lgm_temperature_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/lgm_temperature_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 
@@ -565,7 +565,7 @@ ncrename -O -v z,${z_name_short} ${folder}/temp4.nc
 
 
 ncks -O -3 ${folder}/temp4.nc ${folder}/temp4a.nc
-ncap -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
+ncap2 -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
@@ -630,7 +630,7 @@ fillval="NaN"
 remark="Annual cycle total precipitation"
 units="kg m-2 s-1"
 
-xyz2grd output/pi_precipitation_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/pi_precipitation_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 
@@ -640,7 +640,7 @@ ncrename -O -v z,${z_name_short} ${folder}/temp4.nc
 
 
 ncks -O -3 ${folder}/temp4.nc ${folder}/temp4a.nc
-ncap -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
+ncap2 -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
@@ -703,7 +703,7 @@ fillval="NaN"
 remark="Annual cycle total precipitation"
 units="kg m-2 s-1"
 
-xyz2grd output/lgm_precipitation_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/lgm_precipitation_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 
@@ -713,7 +713,7 @@ ncrename -O -v z,${z_name_short} ${folder}/temp4.nc
 
 
 ncks -O -3 ${folder}/temp4.nc ${folder}/temp4a.nc
-ncap -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
+ncap2 -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${folder}/temp2a.nc
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
