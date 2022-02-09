@@ -493,7 +493,6 @@ ncap2 -O -s "${z_name_short}=double(${z_name_short});"  ${folder}/temp4a.nc ${fo
 ncks -O -4 ${folder}/temp2a.nc ${folder}/temp2.nc
 
 
-
 ncatted -O -a long_name,"${z_name_short}",o,c,"${remark}" ${folder}/temp2.nc
 ncatted -O -a standard_name,"${z_name_short}",o,c,"${z_name}" ${folder}/temp2.nc
 ncatted -O -a units,"${z_name_short}",o,c,"${units}" ${folder}/temp2.nc
@@ -767,7 +766,13 @@ ncrcat -O ${folder}/${variable}_??.nc  nc/${variable}.nc
 done
 
 cdo -O merge ${folder}/precip_0.nc ${folder}/precip_1.nc ${folder}/airtemp_0.nc ${folder}/airtemp_1.nc ${folder}/usurf_0.nc ${folder}/usurf_1.nc ${folder}/climate.nc
-ncks -v glac_index,tbnds -A ${folder}/glacial_index.nc ${folder}/climate.nc
+# some problem causes the merger to fail if the files are in netcdf4 format
+ncks -3 -O ${folder}/climate.nc ${folder}/climate_temp.nc
+ncks -3 -O ${folder}/glacial_index.nc ${folder}/glacial_index_temp.nc
+ncks  -v glac_index,tbnds --append ${folder}/glacial_index_temp.nc ${folder}/climate_temp.nc
+
+ncks -4 -O ${folder}/climate_temp.nc ${folder}/climate.nc
+
 
  
 cdo -O merge  ${folder}/bheatflx.nc ${folder}/thk.nc ${folder}/topg.nc ${folder}/tillphi.nc ${folder}/tillcover.nc  ${folder}/pism_start.nc
