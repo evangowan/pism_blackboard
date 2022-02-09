@@ -182,4 +182,6 @@ gmt pstext << END_CAT -R -JX -F+cTL+f${corner_label} -D0.1/-0.1 -P -O  >> ${plot
 (a)
 END_CAT
 
+gmt psconvert -Tf -A ${plot}
+
 done
