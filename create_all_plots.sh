@@ -51,7 +51,7 @@ done
 
 
 cover=99
-for folder in  new_basal_99_cover.pdf
+for folder in  new_basal_99_cover
 do
 
 
