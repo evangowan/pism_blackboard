@@ -176,7 +176,7 @@ gmt psxy ts_2_m.txt  -BWSen  -Bya1f3p   ${J_options} ${R_options} -P -K -O  -Wth
 y_mid=$( echo "${ymin} ${ymax}" | awk '{print 10^((log($1)/log(10) + log($2)/log(10)) / 2)}')
 
 gmt pstext << END_CAT  ${J_options} ${R_options}  -P -O -K -F+f12p,Helvetica,black+jcb+a90 -N >> ${plot}
-${y_label_position} ${y_mid} Water volume flux (m@+3@+/s)
+${y_label_position} ${y_mid} Water flux (m@+3@+/s)
 END_CAT
 
 gmt pstext << END_CAT -R -JX -F+cTL+f${corner_label} -D0.1/-0.1 -P -O  >> ${plot}
