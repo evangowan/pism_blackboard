@@ -121,7 +121,6 @@ cat << EOF >| yannots.txt
 0 a dry
 1 a tun
 2 a cav
-3 a ob
 EOF
 
 
