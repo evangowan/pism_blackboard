@@ -21,7 +21,7 @@ gmt grdmath x_values.nc y_values.nc MUL = mask.nc
 gmt grdmath  mask.nc ${replace_value} pism_start.nc?${variable} IFELSE = ${variable}_replace.nc
 ncrename -O -v z,${variable} ${variable}_replace.nc
 
-ncap -O -s "${variable}=double(${variable});"  ${variable}_replace.nc ${variable}_replace2.nc
+ncap2 -O -s "${variable}=double(${variable});"  ${variable}_replace.nc ${variable}_replace2.nc
 
 
 cdo -O merge  pism_start.nc ${variable}_replace2.nc testing.nc
