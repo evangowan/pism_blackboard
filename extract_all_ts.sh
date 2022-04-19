@@ -7,6 +7,9 @@ mkdir ${path}/time_series
 base_y1=1200000
 base_y2=2800000
 
+for intervals in 6 #$(seq 0 6)
+do
+
 y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 100000}')
 y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 100000}')
 
@@ -70,4 +73,5 @@ cd ${path}
 
 fi
 
+done
 done
