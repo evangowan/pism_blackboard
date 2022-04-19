@@ -54,7 +54,7 @@ for y_loc in yval:
 
 	combined = np.column_stack((np.array(multiplied_time), np.array(h)))
 
-	filename=f"ts_{counter}.txt"
+	filename=f"ts_{vname}_{counter}.txt"
 	print(filename)
 
 	np.savetxt(filename,combined, delimiter=" ")

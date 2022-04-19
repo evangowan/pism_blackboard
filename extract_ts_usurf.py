@@ -44,7 +44,7 @@ for y_loc in yval:
 	iy = near(y, float(y_loc))
 
 	# get all time records of variable [vname] at indices [iy,ix]
-	vname = 'sliding_mechanism'
+	vname = 'usurf'
 	var = nc.variables[vname]
 	h = var[:,iy,ix]
 
