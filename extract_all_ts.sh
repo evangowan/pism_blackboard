@@ -22,7 +22,7 @@ cd ${directory}
 
 mkdir ${path}/time_series/${experiment}
 
-vartype=thickness
+vartype=thk
 python3 ${path}/extract_ts.py ${y1} ${y2}
 
 for counter in 1 2
