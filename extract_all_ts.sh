@@ -69,7 +69,6 @@ do
 cp ts_${vartype}_${counter}.txt ${path}/time_series/${experiment}/ts_${vartype}_${counter}.txt
 done
 
-cd ${path}
 
 
 
