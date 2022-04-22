@@ -71,7 +71,6 @@ done
 
 cd ${path}
 
-fi
 
 
 vartype=sliding_mechanism
