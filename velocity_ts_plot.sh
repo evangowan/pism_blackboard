@@ -164,13 +164,13 @@ R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 J_options="-JX12c/${height}l"
 
-awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ts_1.txt > ts_1_m.txt
+awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ts_volume_water_flux_1.txt > ts_1_m.txt
 
-gmt psxy ts_volume_water_flux_1_m.txt -Y${height}  ${J_options} ${R_options} -P -O -K -Wthick,blue >> ${plot}
+gmt psxy ts_1_m.txt -Y${height}  ${J_options} ${R_options} -P -O -K -Wthick,blue >> ${plot}
 
-awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ts_2.txt > ts_2_m.txt
+awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ts_volume_water_flux_2.txt > ts_2_m.txt
 
-gmt psxy ts_volume_water_flux_2_m.txt  -BWSen  -Bya1f3p   ${J_options} ${R_options} -P -K -O  -Wthick,red ${fonts} >> ${plot}
+gmt psxy ts_2_m.txt  -BWSen  -Bya1f3p   ${J_options} ${R_options} -P -K -O  -Wthick,red ${fonts} >> ${plot}
 
 y_mid=$( echo "${ymin} ${ymax}" | awk '{print 10^((log($1)/log(10) + log($2)/log(10)) / 2)}')
 
