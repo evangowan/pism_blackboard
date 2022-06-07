@@ -20,7 +20,7 @@ base_y1=1200000
 base_y2=2800000
 
 
-for intervals in $(seq 0 6)
+for intervals in 0 #$(seq 0 6)
 do
 
 
@@ -49,9 +49,9 @@ python3 ${path}/extract_ts_vel.py ${y1} ${y2}
 
 plot="velocity_compare_${intervals}.ps"
 
-gmt psxy ts_1.txt  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
+gmt psxy ts_velsurf_mag_1.txt  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
 
-gmt psxy ts_2.txt  -BWSen -Bxa${xint}f${xsubint}+l"Model Time (years)" -Bya${yint}f${ysubint}   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
+gmt psxy ts_velsurf_mag_2.txt  -BWSen -Bxa${xint}f${xsubint}+l"Model Time (years)" -Bya${yint}f${ysubint}   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
 
 gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,blue >> ${plot}
 25016 27
@@ -99,11 +99,11 @@ ysubint=5
 
 R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
-gmt psxy ts_1.txt -Y${height}  ${J_options} ${R_options} -O -P -K -Wthick,blue >> ${plot}
+gmt psxy ts_sliding_mechanism_1.txt -Y${height}  ${J_options} ${R_options} -O -P -K -Wthick,blue >> ${plot}
 
 #gmt psxy ts_2.txt  -BWSen  -Bya${yint}+l"Sliding mechanism"   ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
 
-gmt psxy ts_2.txt  -BWSen -Bpycyannots.txt  ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
+gmt psxy ts_sliding_mechanism_2.txt  -BWSen -Bpycyannots.txt  ${J_options} ${R_options} -P -O -K -Wthick,red ${fonts} >> ${plot}
 
 y_mid=$( echo "${ymin} ${ymax}" | awk '{print ($1 + $2) / 2}')
 
@@ -136,11 +136,11 @@ ysubint=5
 
 R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
-gmt psxy ts_1.txt -Y${height}  ${J_options} ${R_options} -P -K -O -Wthick,blue >> ${plot}
+gmt psxy ts_hydrology_type_1.txt -Y${height}  ${J_options} ${R_options} -P -K -O -Wthick,blue >> ${plot}
 
 #gmt psxy ts_2.txt  -BWSen  -Bya${yint}+l"Hydrology type"   ${J_options} ${R_options} -P -O -K -Wthick,red  ${fonts} >> ${plot}
 
-gmt psxy ts_2.txt  -BWSen   -Bpycyannots.txt  ${J_options} ${R_options} -P -O -K -Wthick,red  ${fonts} >> ${plot}
+gmt psxy ts_hydrology_type_2.txt  -BWSen   -Bpycyannots.txt  ${J_options} ${R_options} -P -O -K -Wthick,red  ${fonts} >> ${plot}
 
 y_mid=$( echo "${ymin} ${ymax}" | awk '{print ($1 + $2) / 2}')
 
@@ -166,11 +166,11 @@ J_options="-JX12c/${height}l"
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ts_1.txt > ts_1_m.txt
 
-gmt psxy ts_1_m.txt -Y${height}  ${J_options} ${R_options} -P -O -K -Wthick,blue >> ${plot}
+gmt psxy ts_volume_water_flux_1_m.txt -Y${height}  ${J_options} ${R_options} -P -O -K -Wthick,blue >> ${plot}
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ts_2.txt > ts_2_m.txt
 
-gmt psxy ts_2_m.txt  -BWSen  -Bya1f3p   ${J_options} ${R_options} -P -K -O  -Wthick,red ${fonts} >> ${plot}
+gmt psxy ts_volume_water_flux_2_m.txt  -BWSen  -Bya1f3p   ${J_options} ${R_options} -P -K -O  -Wthick,red ${fonts} >> ${plot}
 
 y_mid=$( echo "${ymin} ${ymax}" | awk '{print 10^((log($1)/log(10) + log($2)/log(10)) / 2)}')
 
