@@ -20,7 +20,7 @@ base_y1=1200000
 base_y2=2800000
 
 
-for intervals in 0 #$(seq 0 6)
+for intervals in $(seq 0 6)
 do
 
 
