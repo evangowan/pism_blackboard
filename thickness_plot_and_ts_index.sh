@@ -218,9 +218,9 @@ y_position="3.5c"
 
 
 
-gmt psxy ts_1.txt -Xa${x_position} -Ya${y_position} ${J_options} ${R_options} -P -K -O -Wthick,blue >> ${plot}
+gmt psxy ts_thk_1.txt -Xa${x_position} -Ya${y_position} ${J_options} ${R_options} -P -K -O -Wthick,blue >> ${plot}
 
-gmt psxy ts_2.txt -Xa${x_position} -Ya${y_position} -BWSen -Bxa${xint}f${xsubint}+l"Time (years)" -Bya${yint}f${ysubint}+l"Ice Thickness (m)"   ${J_options} ${R_options} -P -O -K -Wthick,red >> ${plot}
+gmt psxy ts_thk_2.txt -Xa${x_position} -Ya${y_position} -BWSen -Bxa${xint}f${xsubint}+l"Time (years)" -Bya${yint}f${ysubint}+l"Ice Thickness (m)"   ${J_options} ${R_options} -P -O -K -Wthick,red >> ${plot}
 
 gmt psxy << END_CAT ${J_options} ${R_options} -Xa${x_position} -Ya${y_position} -P -K -O -Wthick,blue >> ${plot}
 14500 1500
