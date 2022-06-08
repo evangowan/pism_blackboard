@@ -69,6 +69,18 @@ do
 cp ts_${vartype}_${counter}.txt ${path}/time_series/${experiment}/ts_${vartype}_${counter}.txt
 done
 
+
+
+
+vartype=sliding_mechanism
+python3 ${path}/extract_ts_sliding.py ${y1} ${y2}
+
+
+for counter in 1 2
+do
+cp ts_${vartype}_${counter}.txt ${path}/time_series/${experiment}/ts_${vartype}_${counter}.txt
+done
+
 cd ${path}
 
 fi
