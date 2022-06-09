@@ -11,3 +11,6 @@ FCFLAGS = -O2
 create_grids: create_grids.f90
 	$(FC) -o create_grids $(FCFLAGS) create_grids.f90
 
+create_grids_daily: create_grids_daily.f90
+	$(FC) -o create_grids_daily $(FCFLAGS) create_grids_daily.f90
+

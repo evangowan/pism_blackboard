@@ -17,9 +17,10 @@ program create_grids
 	double precision, parameter :: precipitation_scaling=1e-6
 
 	integer, parameter :: number_months = 12
+	integer, parameter :: number_days = 365
 
-	double precision, parameter, dimension(12) :: days = (/15.5, 45., 74.5, 105., 135.5, 166., 196.5, 227.5, 258, 288.5, 319., 349.5/)
-
+	double precision, parameter, dimension(14) :: days = &
+		 (/-15.5, 15.5, 45., 74.5, 105., 135.5, 166., 196.5, 227.5, 258., 288.5, 319., 349.5, 380.5/)
 
 	! LGM temperature parameters
 !	double precision, parameter, dimension(12) :: lgm_temperature_0 = &
@@ -27,10 +28,10 @@ program create_grids
 !	double precision, parameter, dimension(12) :: lgm_temperature_3500 = &
 !							(/223.2, 226.1, 230.2, 237.3, 246.2, 252.9, 255.9, 253.8, 247.7, 238.8, 230.0, 224.6/)
 
-	double precision, parameter, dimension(12) :: lgm_temperature_0 = &
-							(/242, 246, 251, 259, 267, 270, 271, 270, 266, 258, 248, 243/)
-	double precision, parameter, dimension(12) :: lgm_temperature_3500 = &
-							(/218, 221, 225, 232, 241, 248, 251, 249, 243, 234, 225, 220/)
+	double precision, parameter, dimension(14) :: lgm_temperature_0 = &
+							(/243, 242, 246, 251, 259, 267, 270, 271, 270, 266, 258, 248, 243, 242/)
+	double precision, parameter, dimension(14) :: lgm_temperature_3500 = &
+							(/220, 218, 221, 225, 232, 241, 248, 251, 249, 243, 234, 225, 220, 218/)
 
 	! PI temperature parameters
 !	double precision, parameter, dimension(12) :: pi_temperature_0 = &
@@ -41,10 +42,10 @@ program create_grids
 !							(/265, 268, 274, 280, 286, 291, 293, 292, 288, 279, 271, 267/)
 !	double precision, parameter, dimension(12) :: pi_temperature_3500 = &
 !							(/251, 253, 259, 265, 273, 280, 282, 280, 275, 268, 260, 254/)
-	double precision, parameter, dimension(12) :: pi_temperature_0 = &
-							(/260, 263, 269, 275, 281, 286, 288, 287, 283, 274, 266, 262/)
-	double precision, parameter, dimension(12) :: pi_temperature_3500 = &
-							(/246, 248, 254, 260, 268, 275, 277, 275, 270, 263, 255, 249/)
+	double precision, parameter, dimension(14) :: pi_temperature_0 = &
+							(/262, 260, 263, 269, 275, 281, 286, 288, 287, 283, 274, 266, 262, 260/)
+	double precision, parameter, dimension(14) :: pi_temperature_3500 = &
+							(/249, 246, 248, 254, 260, 268, 275, 277, 275, 270, 263, 255, 249, 246/)
 
 
 
@@ -67,10 +68,10 @@ program create_grids
 !	double precision, parameter, dimension(12) :: lgm_precipitation_3500 = &
 !							(/1.9, 2., 2.5, 2.9, 3.5, 4.1, 4.7, 5., 4.3, 3.4, 2.6, 2.1/)
 
-	double precision, parameter, dimension(12) :: lgm_precipitation_0 = &
-							(/2.9, 3.2, 4.2, 4.7, 4.9, 5.3, 5.6, 4.7, 3.8, 3.2, 2.5, 2.9/)
-	double precision, parameter, dimension(12) :: lgm_precipitation_3500 = &
-							(/2.9, 3.2, 4.2, 4.7, 4.9, 5.3, 5.6, 4.7, 3.8, 3.2, 2.5, 2.9/)
+	double precision, parameter, dimension(14) :: lgm_precipitation_0 = &
+							(/2.9, 2.9, 3.2, 4.2, 4.7, 4.9, 5.3, 5.6, 4.7, 3.8, 3.2, 2.5, 2.9, 2.9/)
+	double precision, parameter, dimension(14) :: lgm_precipitation_3500 = &
+							(/2.9, 2.9, 3.2, 4.2, 4.7, 4.9, 5.3, 5.6, 4.7, 3.8, 3.2, 2.5, 2.9, 2.9/)
 
 
 	! for PI, i am not so concerned
@@ -79,10 +80,10 @@ program create_grids
 !	double precision, parameter, dimension(12) :: pi_precipitation_3500 = &
 !							(/1.9, 2., 2.5, 2.9, 3.5, 4.1, 4.7, 5., 4.3, 3.4, 2.6, 2.1/)
 
-	double precision, parameter, dimension(12) :: pi_precipitation_0 = &
-							(/4.9, 5.2, 6.2, 6.7, 6.9, 7.3, 7.6, 6.7, 5.8, 5.2, 4.5, 4.9/)
-	double precision, parameter, dimension(12) :: pi_precipitation_3500 = &
-							(/4.9, 5.2, 6.2, 6.7, 6.9, 7.3, 7.6, 6.7, 5.8, 5.2, 4.5, 4.9/)
+	double precision, parameter, dimension(14) :: pi_precipitation_0 = &
+							(/4.9, 4.9, 5.2, 6.2, 6.7, 6.9, 7.3, 7.6, 6.7, 5.8, 5.2, 4.5, 4.9, 4.9/)
+	double precision, parameter, dimension(14) :: pi_precipitation_3500 = &
+							(/4.9, 4.9, 5.2, 6.2, 6.7, 6.9, 7.3, 7.6, 6.7, 5.8, 5.2, 4.5, 4.9, 4.9/)
 
 	! I want to make sure that the edges of where the ice sheet is expected to go will not be nowhere close to sea level
 	double precision, parameter :: topg = 250.0
@@ -116,8 +117,14 @@ program create_grids
 	character(len=80) :: filename, month_text
 	integer :: istat
 
-	integer :: month_counter, x_counter, y_counter
+	integer :: month_counter, x_counter, y_counter, day_counter
 	double precision :: center_x, center_y, distance
+
+    !interpolate
+	double precision :: lgm_precipitation_3500_inter, lgm_precipitation_0_inter
+	double precision :: pi_precipitation_3500_inter, pi_precipitation_0_inter
+	double precision :: lgm_temperature_3500_inter, lgm_temperature_0_inter
+	double precision :: pi_temperature_3500_inter, pi_temperature_0_inter
 
 
 	character(len=7), parameter :: folder = "output/"
@@ -161,9 +168,9 @@ program create_grids
 	! allocate memory
 	allocate(tillphi_grid(number_x, number_y), tillcover_grid(number_x, number_y), bheatflx_grid(number_x, number_y), &
 		   topg_grid(number_x, number_y), usurf_0(number_x, number_y), usurf_1(number_x, number_y),&
-		   thk_grid(number_x, number_y), pi_temp_grid(number_x, number_y, number_months), &
-		   lgm_temp_grid(number_x, number_y, number_months), pi_precip_grid(number_x, number_y, number_months), &
-		   lgm_precip_grid(number_x, number_y, number_months), stat=istat)
+		   thk_grid(number_x, number_y), pi_temp_grid(number_x, number_y, number_days), &
+		   lgm_temp_grid(number_x, number_y, number_days), pi_precip_grid(number_x, number_y, number_days), &
+		   lgm_precip_grid(number_x, number_y, number_days), stat=istat)
 
 	if(istat /= 0) THEN
 		write(6,*) "problems allocating memory, error: ", istat
@@ -195,57 +202,76 @@ program create_grids
 			endif
 
 
-			do month_counter = 1, number_months
+			do day_counter = 1, number_days
 
-				! temperature
+				do month_counter = 1, 13
+
+					if (dble(day_counter) > days(month_counter) .and. dble(day_counter) <= days(month_counter+1)) THEN
+
+						lgm_temperature_3500_inter = interpolate_function(day_counter, days(month_counter), days(month_counter+1),&
+					       lgm_temperature_3500(month_counter), lgm_temperature_3500(month_counter+1))
+
+
+						lgm_temperature_0_inter = interpolate_function(day_counter, days(month_counter), days(month_counter+1),&
+					       lgm_temperature_0(month_counter), lgm_temperature_0(month_counter+1))
+
+
+						pi_temperature_3500_inter = interpolate_function(day_counter, days(month_counter), days(month_counter+1),&
+					       pi_temperature_3500(month_counter), pi_temperature_3500(month_counter+1))
+
+						pi_temperature_0_inter = interpolate_function(day_counter, days(month_counter), days(month_counter+1),&
+					       pi_temperature_0(month_counter), pi_temperature_0(month_counter+1))
+
+						lgm_precipitation_3500_inter = interpolate_function(day_counter, days(month_counter), days(month_counter+1),&
+					       lgm_precipitation_3500(month_counter), lgm_precipitation_3500(month_counter+1))
+
+						lgm_precipitation_0_inter = interpolate_function(day_counter, days(month_counter), days(month_counter+1),&
+					       lgm_precipitation_0(month_counter), lgm_precipitation_0(month_counter+1))
+
+
+						pi_precipitation_3500_inter = interpolate_function(day_counter, days(month_counter), days(month_counter+1),&
+					       pi_precipitation_3500(month_counter), pi_precipitation_3500(month_counter+1))
+
+						pi_precipitation_0_inter = interpolate_function(day_counter, days(month_counter), days(month_counter+1),&
+					       pi_precipitation_0(month_counter), pi_precipitation_0(month_counter+1))
+
+					endif
+
+
+				end do
 
 				if(distance < radius) THEN
-					lgm_temp_grid(x_counter,y_counter, month_counter) =&
-					  (lgm_temperature_3500(month_counter) - lgm_temperature_0(month_counter)) / &
-					  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_temperature_0(month_counter)
 
-					pi_temp_grid(x_counter,y_counter, month_counter) = &
-					  (pi_temperature_3500(month_counter) - pi_temperature_0(month_counter)) / &
-					  max_height * (usurf_1(x_counter,y_counter) - topg) +  pi_temperature_0(month_counter)
 
-					! treating the lgm a bit differently 
-!					if(usurf_1(x_counter,y_counter) - topg < 1000.) THEN
-!						lgm_precip_grid(x_counter,y_counter, month_counter) = &
-!						 (lgm_precipitation_1000(month_counter) - lgm_precipitation_0(month_counter)) / &
-!					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_0(month_counter)
-!					else if(usurf_1(x_counter,y_counter) - topg < 2000.) THEN
-!						lgm_precip_grid(x_counter,y_counter, month_counter) = &
-!						 (lgm_precipitation_2000(month_counter) - lgm_precipitation_1000(month_counter)) / &
-!					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_1000(month_counter)
-!					else if(usurf_1(x_counter,y_counter) - topg < 3000.) THEN
-!						lgm_precip_grid(x_counter,y_counter, month_counter) = &
-!						 (lgm_precipitation_3000(month_counter) - lgm_precipitation_2000(month_counter)) / &
-!					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_2000(month_counter)
-!					else 
-!						lgm_precip_grid(x_counter,y_counter, month_counter) = &
-!						 (lgm_precipitation_3500(month_counter) - lgm_precipitation_3000(month_counter)) / &
-!					  	  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_3000(month_counter)
-!
-!					endif
 
-					! the above commented out code was an abject failure
-					lgm_precip_grid(x_counter,y_counter, month_counter) = &
-					  (lgm_precipitation_3500(month_counter) - lgm_precipitation_0(month_counter)) / &
-					  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_0(month_counter)
 
-					pi_precip_grid(x_counter,y_counter, month_counter) = &
-					  (pi_precipitation_3500(month_counter) - pi_precipitation_0(month_counter)) / &
-					  max_height * (usurf_1(x_counter,y_counter) - topg) + pi_precipitation_0(month_counter)
+
+					lgm_temp_grid(x_counter,y_counter, day_counter) =&
+					  (lgm_temperature_0_inter - lgm_temperature_0_inter) / &
+					  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_temperature_0_inter
+
+					pi_temp_grid(x_counter,y_counter, day_counter) = &
+					  (pi_temperature_3500_inter - pi_temperature_0_inter) / &
+					  max_height * (usurf_1(x_counter,y_counter) - topg) +  pi_temperature_0_inter
+
+
+					lgm_precip_grid(x_counter,y_counter, day_counter) = &
+					  (lgm_precipitation_3500_inter - lgm_precipitation_0_inter) / &
+					  max_height * (usurf_1(x_counter,y_counter) - topg) + lgm_precipitation_0_inter
+
+					pi_precip_grid(x_counter,y_counter, day_counter) = &
+					  (pi_precipitation_3500_inter - pi_precipitation_0_inter) / &
+					  max_height * (usurf_1(x_counter,y_counter) - topg) + pi_precipitation_0_inter
 				else
-					pi_temp_grid(x_counter,y_counter, month_counter) =&
-					  pi_temperature_0(month_counter) + (distance-radius) / 50. ! 1 degree increase  every 50 km
+					pi_temp_grid(x_counter,y_counter, day_counter) =&
+					  pi_temperature_0_inter + (distance-radius) / 50. ! 1 degree increase  every 50 km
 
-					lgm_temp_grid(x_counter,y_counter, month_counter) =&
-					  lgm_temperature_0(month_counter) + (distance-radius) / 50. ! 1 degree increase  every 100 km
+					lgm_temp_grid(x_counter,y_counter, day_counter) =&
+					  lgm_temperature_0_inter + (distance-radius) / 50. ! 1 degree increase  every 100 km
 
 					! no precipitation outside of ice sheet to prevent additional growth
-					pi_precip_grid(x_counter,y_counter, month_counter) = 0. 
-					lgm_precip_grid(x_counter,y_counter, month_counter) = 0.
+					pi_precip_grid(x_counter,y_counter, day_counter) = 0. 
+					lgm_precip_grid(x_counter,y_counter, day_counter) = 0.
 
 				endif
 
@@ -287,31 +313,6 @@ program create_grids
 
 	open(unit=thk_unit, file=filename, access="sequential", form="formatted", status="replace")
 
-	
-	do month_counter = 1, number_months, 1
-
-		write(filename,*) month_counter
-		filename = folder // "pi_temperature_" // trim(adjustl(filename)) // ".txt"
-		climate_unit = (month_counter) *10
-		open(unit=climate_unit, file=filename, access="sequential", form="formatted", status="replace")
-
-		write(filename,*) month_counter
-		filename = folder // "lgm_temperature_" // trim(adjustl(filename)) // ".txt"
-		climate_unit = (month_counter) *10 + 1
-		open(unit=climate_unit, file=filename, access="sequential", form="formatted", status="replace")
-
-		write(filename,*) month_counter	
-		filename = folder // "pi_precipitation_" // trim(adjustl(filename)) // ".txt"
-		climate_unit = (month_counter) *10 + 2
-		open(unit=climate_unit, file=filename, access="sequential", form="formatted", status="replace")
-
-		write(filename,*) month_counter
-		filename = folder // "lgm_precipitation_" // trim(adjustl(filename)) // ".txt"
-		climate_unit = (month_counter) *10 + 3
-		open(unit=climate_unit, file=filename, access="sequential", form="formatted", status="replace")
-	
-
-	end do
 
 	do x_counter = 1, number_x
 		do y_counter = 1, number_y
@@ -331,36 +332,7 @@ program create_grids
 		  	  (y_counter-1) * resolution*1000., usurf_0(x_counter,y_counter)
 			write(usurf_1_unit,*) (x_counter-1) * resolution*1000., &
 		  	  (y_counter-1) * resolution*1000., usurf_1(x_counter,y_counter)
-
-			do month_counter = 1, number_months, 1
-
-				climate_unit = (month_counter) *10
-				write(climate_unit,*) (x_counter-1) * resolution*1000., (y_counter-1)* resolution*1000., &
-				  pi_temp_grid(x_counter,y_counter, month_counter)
-
-				climate_unit = (month_counter) *10 + 1
-				write(climate_unit,*) (x_counter-1) * resolution*1000., &
-				  (y_counter-1)* resolution*1000., lgm_temp_grid(x_counter,y_counter, month_counter)
-
-				climate_unit = (month_counter) *10 + 2
-				write(climate_unit,*) (x_counter-1) * resolution*1000., &
-				  (y_counter-1)* resolution*1000., pi_precip_grid(x_counter,y_counter, month_counter) * precipitation_scaling
-
-				climate_unit = (month_counter) *10 + 3
-				write(climate_unit,*) (x_counter-1) * resolution*1000., &
-				  (y_counter-1)* resolution*1000., lgm_precip_grid(x_counter,y_counter, month_counter) * precipitation_scaling
-			end do 
 		end do
-	end do
-
-
-	do month_counter = 1, number_months, 1
-
-
-		climate_unit = (month_counter) *10
-		close(unit=climate_unit)
-	
-
 	end do
 
 	close(unit=tillphi_unit)
@@ -370,5 +342,91 @@ program create_grids
 	close(unit=thk_unit)
 	close(unit=usurf_0_unit)
 	close(unit=usurf_1_unit)
+	
+
+
+
+
+	do day_counter = 1, number_days, 1
+
+
+		write(filename,*) day_counter
+		filename = folder // "pi_temperature_" // trim(adjustl(filename)) // ".txt"
+		climate_unit = (day_counter) *10
+		open(unit=climate_unit, file=filename, access="sequential", form="formatted", status="replace")
+
+		write(filename,*) day_counter
+		filename = folder // "lgm_temperature_" // trim(adjustl(filename)) // ".txt"
+		climate_unit = (day_counter) *10 + 1
+		open(unit=climate_unit, file=filename, access="sequential", form="formatted", status="replace")
+
+		write(filename,*) day_counter	
+		filename = folder // "pi_precipitation_" // trim(adjustl(filename)) // ".txt"
+		climate_unit = (day_counter) *10 + 2
+		open(unit=climate_unit, file=filename, access="sequential", form="formatted", status="replace")
+
+		write(filename,*) day_counter
+		filename = folder // "lgm_precipitation_" // trim(adjustl(filename)) // ".txt"
+		climate_unit = (day_counter) *10 + 3
+		open(unit=climate_unit, file=filename, access="sequential", form="formatted", status="replace")
+
+		do x_counter = 1, number_x
+			do y_counter = 1, number_y
+
+				climate_unit = (day_counter) *10
+				write(climate_unit,*) (x_counter-1) * resolution*1000., (y_counter-1)* resolution*1000., &
+				  pi_temp_grid(x_counter,y_counter, day_counter)
+
+				climate_unit = (day_counter) *10 + 1
+				write(climate_unit,*) (x_counter-1) * resolution*1000., &
+				  (y_counter-1)* resolution*1000., lgm_temp_grid(x_counter,y_counter, day_counter)
+
+				climate_unit = (day_counter) *10 + 2
+				write(climate_unit,*) (x_counter-1) * resolution*1000., &
+				  (y_counter-1)* resolution*1000., pi_precip_grid(x_counter,y_counter, day_counter) * precipitation_scaling
+
+				climate_unit = (day_counter) *10 + 3
+				write(climate_unit,*) (x_counter-1) * resolution*1000., &
+				  (y_counter-1)* resolution*1000., lgm_precip_grid(x_counter,y_counter, day_counter) * precipitation_scaling
+				end do 
+			end do
+
+
+		climate_unit = (day_counter) *10
+		close(unit=climate_unit)
+
+		climate_unit = (day_counter) *10 + 1
+		close(unit=climate_unit)
+
+
+		climate_unit = (day_counter) *10 + 2
+		close(unit=climate_unit)
+
+
+		climate_unit = (day_counter) *10 + 3
+		close(unit=climate_unit)
+	end do
+
+
+
+
+contains
+
+double precision function interpolate_function (day, month_start, month_end, val_start, val_end)
+	implicit none
+	integer, intent(in) :: day
+	double precision, intent(in) :: month_start, month_end, val_start, val_end
+
+	double precision :: double_day, slope, intercept
+
+	double_day = dble(day) 
+
+	slope = (val_end - val_start) / (month_end - month_start)
+	intercept = val_end - slope * month_end
+
+	interpolate_function = slope * double_day + intercept
+
+
+end function interpolate_function
 
 end program create_grids

@@ -1,7 +1,7 @@
 #! /bin/bash
 
 mkdir output
-rm output/*
+#rm output/*
 
 folder=nc
 
@@ -73,7 +73,7 @@ rm ${folder}/ts_temp.nc
 grid_width=4000
 grid_width_m=${grid_width}000
 
-./create_grids ${resolution} ${grid_width}
+./create_grids_daily ${resolution} ${grid_width}
 
 
 
@@ -442,34 +442,13 @@ rm temp.nc
 #########
 
 
-for month in $(seq 1 13)
+for day_counter in $(seq 1 365)
 do
 
+day=$( echo "${day_counter} - 1" | bc).0
+day1=${day_counter}.0
 
-
-case ${month} in
-	1) day=0.0 ; day1=31.0 ;;
-	2) day=31.0; day1=59.0 ;;
-	3) day=59.0; day1=90.0 ;;
-	4) day=90.0; day1=120.0 ;;
-	5) day=120.0; day1=151.0 ;;
-	6) day=151.0; day1=181.0 ;;
-	7) day=181.0; day1=212.0 ;;
-	8) day=212.0; day1=243.0 ;;
-	9) day=243.0; day1=273.0 ;;
-	10) day=273.0; day1=304.0 ;;
-	11) day=304.0; day1=334.0 ;;
-	12) day=334.0; day1=365.0 ;;
-	13) day=366.0; day1=397.0 ;;
-esac
-
-if [ "${month}" == "13" ]
-then
-cp output/pi_temperature_1.txt output/pi_temperature_${month}.txt
-cp output/lgm_temperature_1.txt output/lgm_temperature_${month}.txt
-cp output/pi_precipitation_1.txt output/pi_precipitation_${month}.txt
-cp output/lgm_precipitation_1.txt output/lgm_precipitation_${month}.txt
-fi
+echo "> ${day} ${day1}"
 
 #########
 # airtemp_0
@@ -492,7 +471,7 @@ units="K"
 
 
 
-gmt xyz2grd output/pi_temperature_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/pi_temperature_${day_counter}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 
@@ -540,11 +519,14 @@ ncap2 -Oh -s 'time_bnds[time_per,bnds]=time_bnds1' ${folder}/temp5.nc ${folder}/
 ncks -O -x -v time_bnds1 ${folder}/temp6.nc ${folder}/temp7.nc
 
 
-if [ "${month}" -gt "9" ]
+if [ "${day_counter}" -gt "99" ]
 then
-	mv -f ${folder}/temp7.nc ${folder}/${variable}_${month}.nc
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_${day_counter}.nc
+elif [ "${day_counter}" -gt "9" ]
+then
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_0${day_counter}.nc
 else
-	mv -f ${folder}/temp7.nc ${folder}/${variable}_0${month}.nc
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_00${day_counter}.nc
 fi
 
 
@@ -566,7 +548,7 @@ fillval="NaN"
 remark="Annual cycle 2m temperature"
 units="K"
 
-gmt xyz2grd output/lgm_temperature_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/lgm_temperature_${day_counter}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 
@@ -614,11 +596,14 @@ ncap2 -Oh -s 'time_bnds[time_per,bnds]=time_bnds1' ${folder}/temp5.nc ${folder}/
 ncks -O -x -v time_bnds1 ${folder}/temp6.nc ${folder}/temp7.nc
 
 
-if [ "${month}" -gt "9" ]
+if [ "${day_counter}" -gt "99" ]
 then
-	mv -f ${folder}/temp7.nc ${folder}/${variable}_${month}.nc
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_${day_counter}.nc
+elif [ "${day_counter}" -gt "9" ]
+then
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_0${day_counter}.nc
 else
-	mv -f ${folder}/temp7.nc ${folder}/${variable}_0${month}.nc
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_00${day_counter}.nc
 fi
 
 
@@ -641,7 +626,7 @@ fillval="NaN"
 remark="Annual cycle total precipitation"
 units="kg m-2 s-1"
 
-gmt xyz2grd output/pi_precipitation_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/pi_precipitation_${day_counter}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 
@@ -689,12 +674,16 @@ ncap2 -Oh -s 'time_bnds[time_per,bnds]=time_bnds1' ${folder}/temp5.nc ${folder}/
 ncks -O -x -v time_bnds1 ${folder}/temp6.nc ${folder}/temp7.nc
 
 
-if [ "${month}" -gt "9" ]
+if [ "${day_counter}" -gt "99" ]
 then
-	mv -f ${folder}/temp7.nc ${folder}/${variable}_${month}.nc
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_${day_counter}.nc
+elif [ "${day_counter}" -gt "9" ]
+then
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_0${day_counter}.nc
 else
-	mv -f ${folder}/temp7.nc ${folder}/${variable}_0${month}.nc
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_00${day_counter}.nc
 fi
+
 
 #########
 # precip_1 
@@ -714,7 +703,7 @@ fillval="NaN"
 remark="Annual cycle total precipitation"
 units="kg m-2 s-1"
 
-gmt xyz2grd output/lgm_precipitation_${month}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
+gmt xyz2grd output/lgm_precipitation_${day_counter}.txt -G${folder}/temp.nc -R0/${grid_width_m}/0/${grid_width_m} -I${resolution_m}
 
 ncecat -O -u time_per ${folder}/temp.nc ${folder}/temp4.nc
 
@@ -761,32 +750,35 @@ ncap2 -Oh -s 'time_bnds[time_per,bnds]=time_bnds1' ${folder}/temp5.nc ${folder}/
 
 ncks -O -x -v time_bnds1 ${folder}/temp6.nc ${folder}/temp7.nc
 
-echo ${folder}/${variable}_${month}.nc
-if [ "${month}" -gt "9" ]
+if [ "${day_counter}" -gt "99" ]
 then
-	mv -f ${folder}/temp7.nc ${folder}/${variable}_${month}.nc
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_${day_counter}.nc
+elif [ "${day_counter}" -gt "9" ]
+then
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_0${day_counter}.nc
 else
-	mv -f ${folder}/temp7.nc ${folder}/${variable}_0${month}.nc
+	mv -f ${folder}/temp7.nc ${folder}/${variable}_00${day_counter}.nc
 fi
+
 
 
 done
 
 for variable in precip_0 precip_1 airtemp_0 airtemp_1
 do
-ncrcat -O ${folder}/${variable}_??.nc  nc/${variable}.nc
+ncrcat -O ${folder}/${variable}_???.nc  nc/${variable}.nc
 done
 
-cdo -O merge ${folder}/precip_0.nc ${folder}/precip_1.nc ${folder}/airtemp_0.nc ${folder}/airtemp_1.nc ${folder}/usurf_0.nc ${folder}/usurf_1.nc ${folder}/climate.nc
+cdo -O merge ${folder}/precip_0.nc ${folder}/precip_1.nc ${folder}/airtemp_0.nc ${folder}/airtemp_1.nc ${folder}/usurf_0.nc ${folder}/usurf_1.nc ${folder}/climate_daily.nc
 # some problem causes the merger to fail if the files are in netcdf4 format
-ncks -3 -O ${folder}/climate.nc ${folder}/climate_temp.nc
+ncks -3 -O ${folder}/climate_daily.nc ${folder}/climate_temp.nc
 ncks -3 -O ${folder}/glacial_index.nc ${folder}/glacial_index_temp.nc
 ncks  -v glac_index,tbnds --append ${folder}/glacial_index_temp.nc ${folder}/climate_temp.nc
 
-ncks -4 -O ${folder}/climate_temp.nc ${folder}/climate.nc
+ncks -4 -O ${folder}/climate_temp.nc ${folder}/climate_daily.nc
 
 # interpolate to daily
 
-cdo inttime,1950-01-01,00:00:00,1day ${folder}/climate.nc ${folder}/climate_daily.nc
+
  
 cdo -O merge  ${folder}/bheatflx.nc ${folder}/thk.nc ${folder}/topg.nc ${folder}/tillphi.nc ${folder}/tillcover.nc  ${folder}/pism_start.nc
