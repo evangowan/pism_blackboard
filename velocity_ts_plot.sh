@@ -44,8 +44,8 @@ J_options="-JX12c/${height}"
 R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 
-y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 100000}')
-y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 100000}')
+y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 20000}')
+y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 20000}')
 
 
 python3 ${path}/extract_ts_vel.py ${y1} ${y2}
