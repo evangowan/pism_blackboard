@@ -16,11 +16,14 @@ corner_label=12p
 #y1=600000
 #y2=3400000
 
-base_y1=1200000
-base_y2=2800000
 
+#base_y1=1200000
+#base_y2=2800000
 
-for intervals in $(seq 0 6)
+base_y1=720000
+base_y2=3280000
+
+for intervals in $(seq 0 10)
 do
 
 
