@@ -14,19 +14,20 @@ file1=ex_pism.nc?usurf[${time_id}]
 
 file_snap="snap_0.000.nc"
 
-base_y1=1200000
-base_y2=2800000
+#base_y1=1200000
+#base_y2=2800000
 
+base_y1=720000
+base_y2=3280000
 
-
-for intervals in $(seq 0 6)
+for intervals in $(seq 0 10)
 do
 
 
 
 
-y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 100000}')
-y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 100000}')
+y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 20000}')
+y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 20000}')
 
 x=2000000
 
