@@ -85,7 +85,7 @@ END_CAT
 
 cat << EOF >| yannots.txt
 0 a none
-1 a sed
+1 a def
 2 a hydro
 3 a sgl
 EOF
@@ -124,6 +124,7 @@ cat << EOF >| yannots.txt
 0 a dry
 1 a tun
 2 a cav
+3 a ob
 EOF
 
 
@@ -184,6 +185,10 @@ END_CAT
 gmt pstext << END_CAT -R -JX -F+cTL+f${corner_label} -D0.1/-0.1 -P -O  >> ${plot}
 (a)
 END_CAT
+
+# clean things
+
+rm ts_1_m.txt ts_2_m.txt ts_volume_water_flux_1.txt ts_volume_water_flux_2.txt ts_hydrology_type_1.txt ts_hydrology_type_2.txt ts_sliding_mechanism_1.txt ts_sliding_mechanism_2.txt ts_velsurf_mag_1.txt ts_velsurf_mag_2.txt
 
 gmt psconvert -Tf -A ${plot}
 
