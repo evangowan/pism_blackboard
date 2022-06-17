@@ -128,8 +128,8 @@ file_config=pism_config_modif.nc
           -atmosphere  $atmosphere  \
           -ocean  $ocean  \
           -ys ${ystart} -ye ${yend}    \
-          $save_ex  $exapp   \
-          $save_ts  $tsapp   \
+          $save_ex     \
+          $save_ts    \
           -o  ${fout}  $save_size  $save_snap "          
       echo "======> The time duration: $ystart  $yend  "
       echo $cmd

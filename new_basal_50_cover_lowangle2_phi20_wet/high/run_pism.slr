@@ -128,8 +128,8 @@ file_config=pism_config_modif.nc
           -atmosphere  $atmosphere  \
           -ocean  $ocean  \
           -ys ${ystart} -ye ${yend}    \
-          $save_ex  $exapp   \
-          $save_ts  $tsapp   \
+          $save_ex     \
+          $save_ts     \
           -o  ${fout}  $save_size  $save_snap "          
       echo "======> The time duration: $ystart  $yend  "
       echo $cmd
@@ -147,7 +147,7 @@ input_direc=/work/ollie/egowan/PISM/pism_branch/pism_blackboard/
 
 
 inbound="snap_25000.000.nc"
-boots="boots_T"    #"boots_T"/"boots_F"  
+boots="boots_F"    #"boots_T"/"boots_F"  
 ystart=25000
 yend=25020
 ftsout=ts_pism.nc   
