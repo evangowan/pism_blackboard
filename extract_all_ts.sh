@@ -95,7 +95,7 @@ for experiment in  new_basal_50_cover_lowangle2_phi20_wet3
 do
 
 for subexperiment in higher high_20000 high_30000 high_35000 high_40000
-directory=${path}/${experiment}/${subexperiment}
+directory="${path}/${experiment}/${subexperiment}"
 
 if [ -d "$directory" ]; then
 
