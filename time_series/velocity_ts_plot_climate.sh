@@ -22,7 +22,7 @@ cover=50
 
 first=true
 
-plot="plots/velocity_compare_wet.ps"
+plot="plots/velocity_compare_climate.ps"
 
 
 cat << end_cat > phi_val.txt
@@ -42,7 +42,7 @@ phi_rc=$( awk -v line=${line} '{if(NR==line) {print $3}}' phi_val.txt )
 phi_sed=$( awk -v line=${line} '{if(NR==line) {print $4}}' phi_val.txt )
 cover=$( awk -v line=${line} '{if(NR==line) {print $5}}' phi_val.txt )
 wet=$( awk -v line=${line} '{if(NR==line) {print $6}}' phi_val.txt )
-maxtime=$( awk -v line=${line} '{if(NR==line) {print $6}}' phi_val.txt )
+maxtime=$( awk -v line=${line} '{if(NR==line) {print $7}}' phi_val.txt )
 
 if [ "${maxtime}" == 25000 ]
 then
@@ -259,7 +259,7 @@ fi
 # water flux
 
 ymin=1
-ymax=1000
+ymax=10000
 yint=1
 ysubint=5
 
