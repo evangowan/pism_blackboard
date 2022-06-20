@@ -16,7 +16,7 @@ corner_label=12p
 
 
 
-cover=95
+cover=50
 
 
 
@@ -27,10 +27,10 @@ plot="plots/velocity_compare_wet.ps"
 
 cat << end_cat > phi_val.txt
 new_basal_50_cover_lowangle2_phi20_wet0 1 2 20 50 0
-new_basal_50_cover_lowangle2_phi20 1 2 20 50 5
 new_basal_50_cover_lowangle2_phi20_wet 1 2 20 50 20
 new_basal_50_cover_lowangle2_phi20_wet2 1 2 20 50 50
 new_basal_50_cover_lowangle2_phi20_wet3 1 2 20 50 80
+new_basal_50_cover_lowangle2_phi20_wet3 1 2 20 50 100
 end_cat
 
 for line in 1 2 3 4 5
@@ -104,10 +104,17 @@ fi
 
 
 cat << EOF >| yannots.txt
-0 a Ja
+0 a J
+1 a F
 2 a M
-5 a Ju
+3 a A
+4 a M
+5 a J
+6 a J
+7 a A
 8 a S
+9 a O
+10 a N
 11 a D
 EOF
 
@@ -120,7 +127,7 @@ R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 labelling="-BS -Bxa${xint}f${xsubint}  -Bpxcyannots.txt"
 
-gmt psbasemap  ${labelling}  ${J_options} ${R_options} -P -O -K  ${fonts} >> ${plot}
+gmt psbasemap  ${labelling}  ${J_options} ${R_options} -P -O -K  --FONT_ANNOT_PRIMARY=7p >> ${plot}
 
 xmin=25015.9
 xmax=25017.1
