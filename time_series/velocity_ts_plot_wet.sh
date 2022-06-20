@@ -228,7 +228,7 @@ fi
 # water flux
 
 ymin=1
-ymax=10000
+ymax=1000
 yint=1
 ysubint=5
 
