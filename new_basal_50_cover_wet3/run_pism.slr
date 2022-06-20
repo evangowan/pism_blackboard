@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=PISM_Evan
 #SBATCH -p mpp
-#SBATCH --nodes=1
+#SBATCH --nodes=4
 #SBATCH --ntasks-per-node=36
 #SBATCH --time=12:00:00
 ulimit -s unlimited
@@ -33,6 +33,7 @@ fexout=$8               ##### output ex file name
 fout=$9                 ##### output file                                                             
 inindex=${10}           ##### input index forcing file 
 insealevel=${11}        ##### input sealevel forcing file 
+restart=${12}           ##### append to time series files
 
 ##################################################################
 #dy=100                  ##### output every $dy year 
@@ -92,7 +93,7 @@ file_config=pism_config_modif.nc
       default_fraction_till=" -till_fraction_coverage ${fraction_till}"
       default_hydrology_enhancement="-hydrology_sliding_enhancement ${hydrology_enhancement}"
       model_name="hydrologyEvan"
-      hydrology_model="-hydrology ${model_name} ${default_fraction_till} ${default_hydrology_enhancement} -hydrology_fraction_from_surface 0.05"
+      hydrology_model="-hydrology ${model_name} ${default_fraction_till} ${default_hydrology_enhancement} -hydrology_fraction_from_surface 0.8"
 #       model_name="null"
 #      hydrology_model=" -hydrology ${model_name} "
       #=========== marineice =====================================
@@ -114,7 +115,7 @@ file_config=pism_config_modif.nc
       #=========== output set ================================================
       save_ex=" -extra_file  $fexout  -extra_times  ${ystart}:${dy}:${yend}  -extra_vars  thk,usurf,mask,velsurf_mag "
       save_ts=" -ts_file  $ftsout  -ts_times ${ystart}:${dy}:${yend} "          
-      save_snap="  -save_file  snap  -save_times  ${yy}:${ysnap}:${yend}  -save_size big  -save_split "
+      save_snap="  -save_file  snap  -save_times  ${yy}:${ysnap}:${yend}  -save_size big  -save_split ${restart} "
       #save_snap=" "
       save_size=" -o_size big "
       #
@@ -127,8 +128,8 @@ file_config=pism_config_modif.nc
           -atmosphere  $atmosphere  \
           -ocean  $ocean  \
           -ys ${ystart} -ye ${yend}    \
-          $save_ex  $exapp   \
-          $save_ts  $tsapp   \
+          $save_ex     \
+          $save_ts     \
           -o  ${fout}  $save_size  $save_snap "          
       echo "======> The time duration: $ystart  $yend  "
       echo $cmd
@@ -139,7 +140,7 @@ file_config=pism_config_modif.nc
 
 
 
-ncores=36
+ncores=144
 resolution="20km"
 
 input_direc=/work/ollie/egowan/PISM/pism_branch/pism_blackboard/
@@ -155,10 +156,13 @@ fout=out_pism.nc
 inindex=climate.nc
 insealevel="nothing" # no sea level
 
+# uncomment to append to the ex_pism.nc and ts_pism.nc files"
+#restart="-extra_append"
+restart=" "
 
 date
 
-PISM_run   $ncores   $resolution   $inbound   $boots  $ystart  $yend  $ftsout   $fexout  $fout   $inindex   $insealevel -verbose 5
+PISM_run   $ncores   $resolution   $inbound   $boots  $ystart  $yend  $ftsout   $fexout  $fout   $inindex   $insealevel ${restart} 
 
 date
 

@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=PISM_Evan
 #SBATCH -p mpp
-#SBATCH --nodes=2
+#SBATCH --nodes=4
 #SBATCH --ntasks-per-node=36
-#SBATCH --time=12:00:00
+#SBATCH --time=00:25:00
 ulimit -s unlimited
 
 
@@ -38,8 +38,8 @@ restart=${12}           ##### append to time series files
 ##################################################################
 #dy=100                  ##### output every $dy year 
 #dy=1                  ##### output every $dy year 
-dy=50
-ysnap=5000           ##### save snapshot every $ysnap year
+dy=0.083
+ysnap=5           ##### save snapshot every $ysnap year
 #let  ymod=ystart%ysnap
 #let  yy=ystart-ymod
 let yy=ystart
@@ -80,7 +80,7 @@ file_config=pism_config_modif.nc
 
       yield_stress_model_name="mohr_coulomb_evan"
 #	yield_stress_model_name="mohr_coulomb"
-      subglacier=" -yield_stress ${yield_stress_model_name} -pseudo_plastic   -till_effective_fraction_overburden 0.01  -hydrology_tillwat_max 1   -bed_def iso -tauc_slippery_grounding_lines true"
+      subglacier=" -yield_stress ${yield_stress_model_name} -pseudo_plastic   -till_effective_fraction_overburden 0.01  -hydrology_tillwat_max 1   -bed_def iso -tauc_slippery_grounding_lines true "
       #========== hydrology ======================================
 
       fraction_till=1.0
@@ -93,7 +93,7 @@ file_config=pism_config_modif.nc
       default_fraction_till=" -till_fraction_coverage ${fraction_till}"
       default_hydrology_enhancement="-hydrology_sliding_enhancement ${hydrology_enhancement}"
       model_name="hydrologyEvan"
-      hydrology_model="-hydrology ${model_name} ${default_fraction_till} ${default_hydrology_enhancement} -hydrology_fraction_from_surface 0.05"
+      hydrology_model="-hydrology ${model_name} ${default_fraction_till} ${default_hydrology_enhancement} -hydrology_fraction_from_surface 0.8"
 #       model_name="null"
 #      hydrology_model=" -hydrology ${model_name} "
       #=========== marineice =====================================
@@ -113,9 +113,9 @@ file_config=pism_config_modif.nc
 #      ocean=" pik,delta_SL  -meltfactor_pik  1e-2  -ocean_delta_SL_file  ${insealevel}   "
       ocean=" pik  -meltfactor_pik  1e-2 "
       #=========== output set ================================================
-      save_ex=" -extra_file  $fexout  -extra_times  ${ystart}:${dy}:${yend}  -extra_vars  thk,usurf,mask,velsurf_mag "
-      save_ts=" -ts_file  $ftsout  -ts_times ${ystart}:${dy}:${yend} "          
-      save_snap="  -save_file  snap  -save_times  ${yy}:${ysnap}:${yend}  -save_size big  -save_split ${restart} "
+      save_ex=" -extra_file  $fexout  -extra_times  0:${dy}:${yend}  -extra_vars  volume_water_flux,thk,usurf,mask,velsurf_mag,sliding_mechanism,hydrology_type,tauc "
+      save_ts=" -ts_file  $ftsout  -ts_times 0:${dy}:${yend} "          
+      save_snap="  -save_file  snap  -save_times  0:${ysnap}:${yend}  -save_size big  -save_split ${restart} "
       #save_snap=" "
       save_size=" -o_size big "
       #
@@ -128,8 +128,8 @@ file_config=pism_config_modif.nc
           -atmosphere  $atmosphere  \
           -ocean  $ocean  \
           -ys ${ystart} -ye ${yend}    \
-          $save_ex  $exapp   \
-          $save_ts  $tsapp   \
+          $save_ex    \
+          $save_ts     \
           -o  ${fout}  $save_size  $save_snap "          
       echo "======> The time duration: $ystart  $yend  "
       echo $cmd
@@ -140,16 +140,16 @@ file_config=pism_config_modif.nc
 
 
 
-ncores=72
+ncores=144
 resolution="20km"
 
 input_direc=/work/ollie/egowan/PISM/pism_branch/pism_blackboard/
 
 
-inbound="pism_start.nc"
-boots="boots_T"    #"boots_T"/"boots_F"  
-ystart=0
-yend=40000
+inbound="snap_25000.000.nc"
+boots="boots_F"    #"boots_T"/"boots_F"  
+ystart=25000
+yend=25020
 ftsout=ts_pism.nc   
 fexout=ex_pism.nc 
 fout=out_pism.nc                                                            
@@ -162,7 +162,7 @@ restart=" "
 
 date
 
-PISM_run   $ncores   $resolution   $inbound   $boots  $ystart  $yend  $ftsout   $fexout  $fout   $inindex   $insealevel ${restart} 
+PISM_run   $ncores   $resolution   $inbound   $boots  $ystart  $yend  $ftsout   $fexout  $fout   $inindex   $insealevel ${restart}
 
 date
 
