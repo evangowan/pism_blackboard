@@ -27,10 +27,10 @@ plot="plots/velocity_compare_wet.ps"
 
 cat << end_cat > phi_val.txt
 new_basal_50_cover_lowangle2_phi20_wet0 1 2 20 50 0
+new_basal_50_cover_lowangle2_phi20 1 2 20 50 5
 new_basal_50_cover_lowangle2_phi20_wet 1 2 20 50 20
 new_basal_50_cover_lowangle2_phi20_wet2 1 2 20 50 50
 new_basal_50_cover_lowangle2_phi20_wet3 1 2 20 50 80
-new_basal_50_cover_lowangle2_phi20_wet3 1 2 20 50 100
 end_cat
 
 for line in 1 2 3 4 5
@@ -138,7 +138,7 @@ xsubint=0.08333
 
 cat << EOF >| yannots.txt
 0 a none
-1 a sed
+1 a def
 2 a hydro
 3 a sgl
 EOF
@@ -187,6 +187,7 @@ cat << EOF >| yannots.txt
 0 a dry
 1 a tun
 2 a cav
+3 a ob
 EOF
 
 
