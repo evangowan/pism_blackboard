@@ -86,9 +86,9 @@ cd ${path}
 fi
 
 done
-done
 
 
+############################
 # extract extra experiments
 
 for experiment in  new_basal_50_cover_lowangle2_phi20_wet3 
