@@ -10,8 +10,8 @@ base_y2=3280000
 for intervals in 8 #$(seq 0 10)
 do
 
-y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 100000}')
-y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 100000}')
+y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 20000}')
+y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 20000}')
 
 
 for experiment in new_basal_50_cover_lowangle2_phi20_wet new_basal_50_cover_lowangle2_phi20_wet0 new_basal_50_cover_lowangle2_phi20_wet2 new_basal_50_cover_lowangle2_phi20_wet3 new_basal_50_cover_lowangle2_phi20_wet4 new_basal_50_cover_lowangle2_phi20 #new_basal_50_cover new_basal_50_cover_lowangle2  new_basal_50_cover_lowangle2_phi20_rand new_basal_50_cover_lowangle2_phi20_rand2  new_basal_50_cover_lowangle2_rand new_basal_50_cover_lowangle2_rand2 new_basal_50_cover_lowangle3 new_basal_50_cover_lowangle3_phi20 new_basal_80_cover new_basal_95_cover new_basal_95_cover_default new_basal_95_cover_default_phi20 new_basal_95_cover_lowangle new_basal_95_cover_lowangle2 new_basal_95_cover_lowangle2_phi20 new_basal_95_cover_lowangle3 new_basal_95_cover_lowangle3_phi20 new_basal_99_cover
