@@ -10,3 +10,7 @@ time_series/yannots.txt
 time_values.txt
 *.nc
 gmt.history
+*.pdf
+*.ps
+new_basal*.txt
+plots/
