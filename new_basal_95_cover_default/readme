@@ -1,3 +1,0 @@
-For this simulation, it is using the new basal conditions model and hydrology model, along with 30 degree shear friction angle and a strip of 95% sediment coverage.
-
-I am trying a different value for the Coulomb friction angles for the hydrology sliding model. I am setting sediment covered areas to be 5 (5 degrees is defalut) and rock covered areas to be 15 degree (default is 15). I want to see if this will cause any measureable change in the sliding, because even at 95%, it is not doing much. In reality, sediment deformation is not necessarily common, so if it starts to switch to the hydrology model over the sediment covered area which has a 30 degree angle, that should almost be expected.
