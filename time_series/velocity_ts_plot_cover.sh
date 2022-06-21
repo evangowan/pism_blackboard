@@ -44,7 +44,7 @@ J_options="-JX3c/${height}c"
 R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 
-experiment=new_basal_${cover}_cover
+experiment=new_basal_${cover}_cover_wet3
 # velocity
 
 
@@ -89,10 +89,17 @@ fi
 
 
 cat << EOF >| yannots.txt
-0 a Ja
+0 a J
+1 a F
 2 a M
-5 a Ju
+3 a A
+4 a M
+5 a J
+6 a J
+7 a A
 8 a S
+9 a O
+10 a N
 11 a D
 EOF
 
@@ -105,7 +112,7 @@ R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 labelling="-BS -Bxa${xint}f${xsubint}  -Bpxcyannots.txt"
 
-gmt psbasemap  ${labelling}  ${J_options} ${R_options} -P -O -K  ${fonts} >> ${plot}
+gmt psbasemap  ${labelling}  ${J_options} ${R_options} -P -O -K  --FONT_ANNOT_PRIMARY=7p >> ${plot}
 
 xmin=25015.9
 xmax=25017.1
@@ -116,7 +123,7 @@ xsubint=0.08333
 
 cat << EOF >| yannots.txt
 0 a none
-1 a sed
+1 a def
 2 a hydro
 3 a sgl
 EOF
@@ -165,6 +172,7 @@ cat << EOF >| yannots.txt
 0 a dry
 1 a tun
 2 a cav
+3 a ob
 EOF
 
 
@@ -206,7 +214,7 @@ fi
 # water flux
 
 ymin=1
-ymax=10000
+ymax=1000
 yint=1
 ysubint=5
 
@@ -224,7 +232,7 @@ fi
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ${experiment}/ts_volume_water_flux_1.txt  > ts_1_m.txt
 
-gmt psxy ts_1_m.txt -Y${height}c  ${J_options} ${R_options} -P -O -K -Wthick,blue -B+t"${cover}% cover" --FONT_TITLE=12p >> ${plot}
+gmt psxy ts_1_m.txt -Y${height}c  ${J_options} ${R_options} -P -O -K -Wthick,blue -B+t"S@-f@-=${cover}%" --FONT_TITLE=12p >> ${plot}
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ${experiment}/ts_volume_water_flux_2.txt > ts_2_m.txt
 
