@@ -12,5 +12,11 @@ time_values.txt
 gmt.history
 *.pdf
 *.ps
-new_basal*.txt
+*.cpt
+*~
+new_basal*/.txt
+*slurm*
 plots/
+create_grids
+create_grids_daily
+
