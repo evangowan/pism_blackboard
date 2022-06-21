@@ -1,0 +1,12 @@
+nc/
+output/
+tbnds.txt
+time_series/gmt.history
+time_series/phi_val.txt
+time_series/plots/
+time_series/ts_1_m.txt
+time_series/ts_2_m.txt
+time_series/yannots.txt
+time_values.txt
+*.nc
+gmt.history
