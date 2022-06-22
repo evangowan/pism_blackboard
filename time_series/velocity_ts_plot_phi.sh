@@ -26,10 +26,10 @@ plot="plots/velocity_compare_phi.ps"
 
 
 cat << end_cat > phi_val.txt
-new_basal_95_cover_lowangle 0.5 1
-new_basal_95_cover_lowangle2 1 2
-new_basal_95_cover_lowangle3 2 5
-new_basal_95_cover 5 15
+new_basal_50_cover_lowangle_wet3 0.5 1
+new_basal_50_cover_lowangle2_wet3 1 2
+new_basal_50_cover_lowangle3_wet3 2 5
+new_basal_50_cover_wet3 5 15
 end_cat
 
 for line in 1 2 3 4
@@ -100,10 +100,17 @@ fi
 
 
 cat << EOF >| yannots.txt
-0 a Ja
+0 a J
+1 a F
 2 a M
-5 a Ju
+3 a A
+4 a M
+5 a J
+6 a J
+7 a A
 8 a S
+9 a O
+10 a N
 11 a D
 EOF
 
@@ -116,8 +123,7 @@ R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 labelling="-BS -Bxa${xint}f${xsubint}  -Bpxcyannots.txt"
 
-gmt psbasemap  ${labelling}  ${J_options} ${R_options} -P -O -K  ${fonts} >> ${plot}
-
+gmt psbasemap  ${labelling}  ${J_options} ${R_options} -P -O -K  --FONT_ANNOT_PRIMARY=7p >> ${plot}
 xmin=25015.9
 xmax=25017.1
 xint=0.5
@@ -127,7 +133,7 @@ xsubint=0.08333
 
 cat << EOF >| yannots.txt
 0 a none
-1 a sed
+1 a def
 2 a hydro
 3 a sgl
 EOF
@@ -176,6 +182,7 @@ cat << EOF >| yannots.txt
 0 a dry
 1 a tun
 2 a cav
+3 a ob
 EOF
 
 
@@ -217,7 +224,7 @@ fi
 # water flux
 
 ymin=1
-ymax=10000
+ymax=1000
 yint=1
 ysubint=5
 
@@ -235,7 +242,7 @@ fi
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ${experiment}/ts_volume_water_flux_1.txt  > ts_1_m.txt
 
-gmt psxy ts_1_m.txt -Y${height}c  ${J_options} ${R_options} -P -O -K -Wthick,blue -B+t"@~\146@~@-sc@-=${phi_sc}  @~\146@~@-rc@-=${phi_rc}" --FONT_TITLE=10p >> ${plot}
+gmt psxy ts_1_m.txt -Y${height}c  ${J_options} ${R_options} -P -O -K -Wthick,blue -B+t"@~\147@~@-sc@-=${phi_sc}  @~\147@~@-rc@-=${phi_rc}" --FONT_TITLE=10p >> ${plot}
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ${experiment}/ts_volume_water_flux_2.txt > ts_2_m.txt
 
