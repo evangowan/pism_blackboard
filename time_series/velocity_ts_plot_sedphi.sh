@@ -16,29 +16,41 @@ corner_label=12p
 
 
 
-cover=95
+cover=50
 
 
+
+
+
+cat << end_cat > phi_val_1.txt
+new_basal_50_cover_lowangle_wet3 0.5 1 30
+new_basal_50_cover_lowangle_phi20_wet3 0.5 1 20
+new_basal_50_cover_lowangle2_wet3 1 2 30
+new_basal_50_cover_lowangle2_phi20_wet3 1 2 20
+end_cat
+
+
+cat << end_cat > phi_val_2.txt
+new_basal_50_cover_lowangle3_wet3 2 5 30
+new_basal_50_cover_lowangle3_phi20_wet3 2 5 20
+new_basal_50_cover_wet3 5 15 30
+new_basal_50_cover_default_phi20_wet3 5 15 20
+end_cat
+
+for loop_num in 1 2
+do
 
 first=true
 
-plot="plots/velocity_compare_sedphi.ps"
-
-
-cat << end_cat > phi_val.txt
-new_basal_95_cover_lowangle2 1 2 30
-new_basal_95_cover_lowangle2_phi20 1 2 20
-new_basal_95_cover_lowangle3 2 5 30
-new_basal_95_cover_lowangle3_phi20 2 5 20
-end_cat
+plot="plots/velocity_compare_sedphi_${loop_num}.ps"
 
 for line in 1 2 3 4
 do
 
-experiment=$( awk -v line=${line} '{if(NR==line) {print $1}}' phi_val.txt )
-phi_sc=$( awk -v line=${line} '{if(NR==line) {print $2}}' phi_val.txt )
-phi_rc=$( awk -v line=${line} '{if(NR==line) {print $3}}' phi_val.txt )
-phi_sed=$( awk -v line=${line} '{if(NR==line) {print $4}}' phi_val.txt )
+experiment=$( awk -v line=${line} '{if(NR==line) {print $1}}' phi_val_${loop_num}.txt )
+phi_sc=$( awk -v line=${line} '{if(NR==line) {print $2}}' phi_val_${loop_num}.txt )
+phi_rc=$( awk -v line=${line} '{if(NR==line) {print $3}}' phi_val_${loop_num}.txt )
+phi_sed=$( awk -v line=${line} '{if(NR==line) {print $4}}' phi_val_${loop_num}.txt )
 
 xmin=25015.9
 xmax=25017.1
@@ -101,10 +113,17 @@ fi
 
 
 cat << EOF >| yannots.txt
-0 a Ja
+0 a J
+1 a F
 2 a M
-5 a Ju
+3 a A
+4 a M
+5 a J
+6 a J
+7 a A
 8 a S
+9 a O
+10 a N
 11 a D
 EOF
 
@@ -117,7 +136,7 @@ R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 labelling="-BS -Bxa${xint}f${xsubint}  -Bpxcyannots.txt"
 
-gmt psbasemap  ${labelling}  ${J_options} ${R_options} -P -O -K  ${fonts} >> ${plot}
+gmt psbasemap  ${labelling}  ${J_options} ${R_options} -P -O -K  --FONT_ANNOT_PRIMARY=7p >> ${plot}
 
 xmin=25015.9
 xmax=25017.1
@@ -128,7 +147,7 @@ xsubint=0.08333
 
 cat << EOF >| yannots.txt
 0 a none
-1 a sed
+1 a def
 2 a hydro
 3 a sgl
 EOF
@@ -177,6 +196,7 @@ cat << EOF >| yannots.txt
 0 a dry
 1 a tun
 2 a cav
+3 a ob
 EOF
 
 
@@ -218,7 +238,7 @@ fi
 # water flux
 
 ymin=1
-ymax=10000
+ymax=1000
 yint=1
 ysubint=5
 
@@ -236,7 +256,7 @@ fi
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ${experiment}/ts_volume_water_flux_1.txt  > ts_1_m.txt
 
-gmt psxy ts_1_m.txt -Y${height}c  ${J_options} ${R_options} -P -O -K -Wthick,blue -B+t"@~\146@~@-sc@-=${phi_sc}  @~\146@~@-rc@-=${phi_rc}  @~\146@~@-sed@-=${phi_sed}" --FONT_TITLE=8p >> ${plot}
+gmt psxy ts_1_m.txt -Y${height}c  ${J_options} ${R_options} -P -O -K -Wthick,blue -B+t"@~\147@~@-sc@-=${phi_sc}  @~\147@~@-rc@-=${phi_rc}  @~\146@~@-sed@-=${phi_sed}" --FONT_TITLE=8p >> ${plot}
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ${experiment}/ts_volume_water_flux_2.txt > ts_2_m.txt
 
@@ -292,3 +312,6 @@ END_CAT
 
 
 gmt psconvert -Tf -A ${plot}
+
+rm phi_val_${loop_num}.txt ts_1_m.txt ts_2_m.txt
+done
