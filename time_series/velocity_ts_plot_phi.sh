@@ -16,7 +16,7 @@ corner_label=12p
 
 
 
-cover=95
+cover=50
 
 
 

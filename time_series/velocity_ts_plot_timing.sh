@@ -22,25 +22,31 @@ cover=50
 
 first=true
 
-plot="plots/velocity_compare_phi_sedphi20.ps"
+plot="plots/velocity_compare_timing.ps"
 
 
 cat << end_cat > phi_val.txt
-new_basal_50_cover_lowangle_phi20_wet3 0.5 1
-new_basal_50_cover_lowangle2_phi20_wet3 1 2
-new_basal_50_cover_lowangle3_phi20_wet3 2 5
-new_basal_50_cover_default_phi20_wet3 5 15
+new_basal_50_cover_lowangle2_phi20_wet3 1 2 20 50 80 monthly
+new_basal_50_cover_lowangle2_phi20_wet3_higher 1 2 20 50 80 weekly
 end_cat
 
-for line in 1 2 3 4
+for line in 1 2 
 do
 
 experiment=$( awk -v line=${line} '{if(NR==line) {print $1}}' phi_val.txt )
 phi_sc=$( awk -v line=${line} '{if(NR==line) {print $2}}' phi_val.txt )
 phi_rc=$( awk -v line=${line} '{if(NR==line) {print $3}}' phi_val.txt )
+phi_sed=$( awk -v line=${line} '{if(NR==line) {print $4}}' phi_val.txt )
+cover=$( awk -v line=${line} '{if(NR==line) {print $5}}' phi_val.txt )
+wet=$( awk -v line=${line} '{if(NR==line) {print $6}}' phi_val.txt )
+timing=$( awk -v line=${line} '{if(NR==line) {print $7}}' phi_val.txt )
+
+
 
 xmin=25015.9
 xmax=25017.1
+y_label_position=25015.4
+
 xint=0.5
 xsubint=0.08333
 ymin=0
@@ -48,7 +54,7 @@ ymax=29
 yint=10
 ysubint=5
 
-y_label_position=25015.4
+
 
 
 J_options="-JX3c/${height}c"
@@ -64,7 +70,7 @@ then
 
 	labelling="-BWbrt -Bxa${xint}f${xsubint} -Bya${yint}f${ysubint}"
 
-	gmt psxy -Y6c ${experiment}/ts_velsurf_mag_1.txt  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
+	gmt psxy -X6c -Y6c ${experiment}/ts_velsurf_mag_1.txt  ${J_options} ${R_options} -P -K -Wthick,blue > ${plot}
 
 
 else
@@ -124,8 +130,15 @@ R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 labelling="-BS -Bxa${xint}f${xsubint}  -Bpxcyannots.txt"
 
 gmt psbasemap  ${labelling}  ${J_options} ${R_options} -P -O -K  --FONT_ANNOT_PRIMARY=7p >> ${plot}
+
+
+
 xmin=25015.9
 xmax=25017.1
+y_label_position=25015.4
+
+
+
 xint=0.5
 xsubint=0.08333
 
@@ -242,7 +255,7 @@ fi
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ${experiment}/ts_volume_water_flux_1.txt  > ts_1_m.txt
 
-gmt psxy ts_1_m.txt -Y${height}c  ${J_options} ${R_options} -P -O -K -Wthick,blue -B+t"@~\147@~@-sc@-=${phi_sc}  @~\147@~@-rc@-=${phi_rc}" --FONT_TITLE=10p >> ${plot}
+gmt psxy ts_1_m.txt -Y${height}c  ${J_options} ${R_options} -P -O -K -Wthick,blue -B+t"Time steps=${timing}" --FONT_TITLE=8p >> ${plot}
 
 awk -v minval=${ymin} '{if($2 < minval) {print $1, minval} else {print $1, $2}}' ${experiment}/ts_volume_water_flux_2.txt > ts_2_m.txt
 
@@ -266,6 +279,8 @@ first=false
 
 done
 
+
+
 xmin=25015
 xmax=25020
 
@@ -278,7 +293,7 @@ R_options="-R${xmin}/${xmax}/${ymin}/${ymax}"
 
 J_options="-JX16c/${height}c"
 
-gmt psxy << END_CAT ${J_options} ${R_options} -Y-16c -X-12c -P -K -O -Wthick,blue >> ${plot}
+gmt psxy << END_CAT ${J_options} ${R_options} -Y-16c -X-8c -P -K -O -Wthick,blue >> ${plot}
 25016 17
 25016.5 17
 END_CAT
@@ -288,7 +303,7 @@ gmt psxy << END_CAT ${J_options} ${R_options}  -P -K -O -Wthick,red >> ${plot}
 25018 17
 END_CAT
 gmt pstext << END_CAT  ${J_options} ${R_options} -P  -O -K -F+f12p,Helvetica,black+jlm >> ${plot}
-25017.5 23 Time (months)
+25017.1 23 Time (months)
 END_CAT
 
 gmt pstext << END_CAT  ${J_options} ${R_options} -P  -O -F+f10p,Helvetica,black+jlm >> ${plot}
