@@ -14,8 +14,6 @@ gmt.history
 *.ps
 *.cpt
 *~
-*_1.txt
-*_2.txt
 *slurm*
 plots/
 create_grids
