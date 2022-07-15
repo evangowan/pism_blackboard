@@ -21,7 +21,7 @@ file_snap="snap_0.000.nc"
 base_y1=720000
 base_y2=3280000
 
-python3 ${path}/extract_index.py
+
 
 for intervals in 8 #$(seq 0 6)
 do
@@ -34,6 +34,7 @@ percent_cover=$(echo ${experiment} | awk --field-separator "_" '{print $3}')
 
 cd ${experiment}
 file1=ex_pism.nc?usurf[${time_id}]
+python3 ${path}/extract_index.py
 
 y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 100000}')
 y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 100000}')
