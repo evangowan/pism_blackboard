@@ -1,29 +1,39 @@
 #! /bin/bash
 
 path="/work/ollie/egowan/PISM/pism_blackboard"
-path=..
-time=$1
+#path=..
+time=25000
 
-percent_cover=$2
+plot_dir=${path}/index_plots
+
+mkdir ${plot_dir}
+
+#percent_cover=$2
 
 #file1=snap_${time}.000.nc
 
 time_id=$(echo ${time} / 50 | bc)
 
-file1=ex_pism.nc?usurf[${time_id}]
+
 
 file_snap="snap_0.000.nc"
 
-base_y1=1200000
-base_y2=2800000
+base_y1=720000
+base_y2=3280000
 
 python3 ${path}/extract_index.py
 
-for intervals in $(seq 0 6)
+for intervals in 8 #$(seq 0 6)
 do
 
 
+for experiment in new_basal_50_cover_lowangle2_phi20_wet new_basal_50_cover_lowangle2_phi20_wet0 new_basal_50_cover_lowangle2_phi20_wet2 new_basal_50_cover_lowangle2_phi20_wet3 new_basal_50_cover_lowangle2_phi20_wet4 new_basal_50_cover_lowangle2_phi20 new_basal_50_cover_wet3  new_basal_80_cover_wet3 new_basal_95_cover_wet3 new_basal_99_cover_wet3 new_basal_80_cover_lowangle2_phi20_wet3 new_basal_95_cover_lowangle2_phi20_wet3 new_basal_99_cover_lowangle2_phi20_wet3 new_basal_50_cover_lowangle3_phi20_wet3 new_basal_50_cover_lowangle_phi20_wet3 new_basal_50_cover_default_phi20_wet3 new_basal_50_cover_lowangle2_wet3 new_basal_50_cover_lowangle3_wet3 new_basal_50_cover_lowangle_wet3
+do
 
+percent_cover=$(echo ${experiment} | awk --field-separator "_" '{print $3}')
+
+cd ${experiment}
+file1=ex_pism.nc?usurf[${time_id}]
 
 y1=$( echo ${base_y1} ${intervals} | awk '{print $1 - $2 * 100000}')
 y2=$( echo ${base_y2} ${intervals} | awk '{print $1 + $2 * 100000}')
@@ -77,7 +87,7 @@ tick_interval=250
 
 gmt makecpt -Cjet -T${min_val}/${max_val}/${interval} -I > iceshades_coarse.cpt
 
-plot=ice_surface_ts_${intervals}.ps
+plot=${plot_dir}/${experiment}_${intervals}.ps
 
 gmt grdmath ${file1} 250 GT 0 NAN ${file1} MUL = usurf.nc
 
@@ -246,5 +256,13 @@ gmt pstext << END_CAT -Xa${x_position} -Ya${y_position}  ${J_options} ${R_option
 (d)
 END_CAT
 
+gmt psconvert -Tf -A ${plot}
+
+# clean files
+
+rm iceshades.cpt iceshades_coarse.cpt ts_thk_1.txt ts_thk_2.txt usurf.nc cover.cpt tillcover.nc
+
+cd ..
+done
 done
 
